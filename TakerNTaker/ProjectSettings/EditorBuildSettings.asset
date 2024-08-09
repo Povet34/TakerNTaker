@@ -8,4 +8,5 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Undead Survivor/Complete/CompleteScene.unity
     guid: 1a2631ae6bd992d479d6c11dc9582feb
-  m_configObjects: {}
+  m_configObjects:
+    com.unity.input.settings: {fileID: 11400000, guid: 9c1969a925ed6494e926fe4f072988fb, type: 2}
