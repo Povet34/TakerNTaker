@@ -4,7 +4,7 @@
 PlayerSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 26
-  productGUID: 1b7c85b1ce4732d4495d277f47a68733
+  productGUID: b917c18b9475cbb48be8d9c64de280d1
   AndroidProfiler: 0
   AndroidFilterTouchesWhenObscured: 0
   AndroidEnableSustainedPerformanceMode: 0
@@ -12,7 +12,7 @@ PlayerSettings:
   targetDevice: 2
   useOnDemandResources: 0
   accelerometerFrequency: 60
-  companyName: DefaultCompany
+  companyName: JSC
   productName: TakerNTaker
   defaultCursor: {fileID: 0}
   cursorHotspot: {x: 0, y: 0}
@@ -136,7 +136,7 @@ PlayerSettings:
   vulkanEnableLateAcquireNextImage: 0
   vulkanEnableCommandBufferRecycling: 1
   loadStoreDebugModeEnabled: 0
-  bundleVersion: 1.0
+  bundleVersion: 0.1
   preloadedAssets: []
   metroInputSource: 0
   wsaTransparentSwapchain: 0
@@ -157,7 +157,8 @@ PlayerSettings:
   resetResolutionOnWindowResize: 0
   androidSupportedAspectRatio: 1
   androidMaxAspectRatio: 2.1
-  applicationIdentifier: {}
+  applicationIdentifier:
+    Android: com.JSC.TakerNTaker
   buildNumber:
     Standalone: 0
     VisionOS: 0
@@ -781,14 +782,14 @@ PlayerSettings:
   apiCompatibilityLevelPerPlatform: {}
   m_RenderingPath: 1
   m_MobileRenderingPath: 1
-  metroPackageName: TakerNTaker
+  metroPackageName: Procedural_Dungoen_Unity22
   metroPackageVersion: 
   metroCertificatePath: 
   metroCertificatePassword: 
   metroCertificateSubject: 
   metroCertificateIssuer: 
   metroCertificateNotAfter: 0000000000000000
-  metroApplicationDescription: TakerNTaker
+  metroApplicationDescription: Procedural_Dungoen_Unity22
   wsaImages: {}
   metroTileShortName: 
   metroTileShowName: 0
@@ -856,10 +857,10 @@ PlayerSettings:
   apiCompatibilityLevel: 6
   activeInputHandler: 2
   windowsGamepadBackendHint: 0
-  cloudProjectId: 06fd5743-ee1d-45f2-82b9-b24ebe154975
+  cloudProjectId: 620f1eee-b156-44d1-a6e8-5f862b1f51c7
   framebufferDepthMemorylessMode: 0
   qualitySettingsNames: []
-  projectName: TakerNTaker 2024-08-09_15-21-29
+  projectName: Procedural_Dungoen_Unity22
   organizationId: wotkd34_unity
   cloudEnabled: 0
   legacyClampBlendShapeWeights: 0

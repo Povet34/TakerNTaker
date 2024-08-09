@@ -98,6 +98,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   center: {fileID: 2070501090620423693}
+  fov: 60
+  viewDistance: 7
 --- !u!1 &4828008795218010343
 GameObject:
   m_ObjectHideFlags: 0

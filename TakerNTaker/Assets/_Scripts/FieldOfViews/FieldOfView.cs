@@ -75,7 +75,7 @@ public class FieldOfView : MonoBehaviour
         mesh.RecalculateBounds();
     }
 
-    public void SetAimDirection(Vector3 aimDir)   
+    public void SetAimwDirection(Vector3 aimDir)   
     {
         startAngle = UtilsClass.GetAngleFromVector(aimDir) + fov / 2f;
     }

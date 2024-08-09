@@ -32,7 +32,7 @@ namespace Goldmetal.UndeadSurvivor
             speed *= Character.Speed;
             anim.runtimeAnimatorController = animCon[GameManager.instance.playerId];
 
-            viewSight.SetAimDirection(Vector2.right);
+            viewSight.SetAimwDirection(Vector2.right);
             viewSight.UpdateSight(rigid.position);
         }
 
@@ -55,7 +55,7 @@ namespace Goldmetal.UndeadSurvivor
 
             if(Vector2.zero != inputVec)
             {
-                viewSight.SetAimDirection(inputVec.normalized);
+                viewSight.SetAimwDirection(inputVec.normalized);
                 viewSight.UpdateSight(rigid.position);
             }
         }
