@@ -71,6 +71,8 @@ public class FieldOfView : MonoBehaviour
         mesh.vertices = vertices;
         mesh.uv = uv;
         mesh.triangles = triangles;
+
+        mesh.RecalculateBounds();
     }
 
     public void SetAimDirection(Vector3 aimDir)   
