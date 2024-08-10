@@ -1,3 +1,4 @@
+using InGameInteractable;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -80,15 +81,35 @@ namespace Goldmetal.UndeadSurvivor
             if (collision.collider.gameObject.layer.Equals(LayerMask.NameToLayer("Object")))
                 return;
 
-            GameManager.instance.health -= Time.deltaTime * 10;
+            //Take Item
+            {
+                if(collision.collider.gameObject.CompareTag("InGameInteractable"))
+                {
+                    var interactable = collision.collider.GetComponent<IInGameInteractable>();
+                    if(null != interactable)
+                    {
+                        interactable.Use(this);
+                        return;
+                    }
+                }
+            }
 
-            if (GameManager.instance.health < 0) {
-                for (int index = 2; index < transform.childCount; index++) {
-                    transform.GetChild(index).gameObject.SetActive(false);
+            //TakeDamage
+            {
+                GameManager.instance.health -= Time.deltaTime * 10;
+
+                if (GameManager.instance.health < 0)
+                {
+                    for (int index = 2; index < transform.childCount; index++)
+                    {
+                        transform.GetChild(index).gameObject.SetActive(false);
+                    }
+
+                    anim.SetTrigger("Dead");
+                    GameManager.instance.GameOver();
                 }
 
-                anim.SetTrigger("Dead");
-                GameManager.instance.GameOver();
+                return;
             }
         }
 

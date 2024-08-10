@@ -1,15 +1,15 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Events;
 
 namespace IngameSkill
 {
-    [CreateAssetMenu(fileName = "Skill", menuName = "Scriptble Object/Skill")]
-    public class SkillData : MonoBehaviour
+    [CreateAssetMenu(fileName = "Skill", menuName = "Scriptble Object/SkillData")]
+    public class SkillData : ScriptableObject
     {
-        public enum eSkillType { None, }
+        public enum eSkillType 
+        {
+            None,
+            W_RUSH,
+        }
 
         [Header("# Main Info")]
         public eSkillType skillType;

@@ -21,4 +21,9 @@ public class TestSkill : MonoBehaviour, ISkill
 
         Controller.Bind(action, actionEx);
     }
+
+    public void LevelUp()
+    {
+        throw new NotImplementedException();
+    }
 }

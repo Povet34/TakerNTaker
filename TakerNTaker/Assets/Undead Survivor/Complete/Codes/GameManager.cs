@@ -24,8 +24,10 @@ namespace Goldmetal.UndeadSurvivor
         public PoolManager pool;
         public Player player;
         public LevelUp uiLevelUp;
+        public SkillSelector skillSelector;
+
         public Result uiResult;
-        public Transform uiJoy;
+        public Transform uiPlayerInputs;
         public GameObject enemyCleaner;
 
         void Awake()
@@ -123,18 +125,23 @@ namespace Goldmetal.UndeadSurvivor
             }
         }
 
+        public void ShowSkillSelector()
+        {
+            skillSelector.Show(0);
+        }
+
         public void Stop()
         {
             isLive = false;
             Time.timeScale = 0;
-            uiJoy.localScale = Vector3.zero;
+            uiPlayerInputs.localScale = Vector3.zero;
         }
 
         public void Resume()
         {
             isLive = true;
             Time.timeScale = 1;
-            uiJoy.localScale = Vector3.one;
+            uiPlayerInputs.localScale = Vector3.one;
         }
     }
 }

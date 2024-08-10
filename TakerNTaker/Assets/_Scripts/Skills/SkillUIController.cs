@@ -7,7 +7,7 @@ using UnityEngine.EventSystems;
 
 public class SkillUIController : MonoBehaviour
 {
-    [SerializeField] Dictionary<int, SkillButton> SlotDic;
+    [SerializeField] Dictionary<int, SkillButton> SlotDic = new Dictionary<int, SkillButton>();
 
     private void Awake()
     {
