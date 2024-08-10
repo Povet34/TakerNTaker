@@ -42,7 +42,7 @@ namespace Goldmetal.UndeadSurvivor
             health = maxHealth;
 
             player.gameObject.SetActive(true);
-            uiLevelUp.Select(playerId % 2);
+            //uiLevelUp.Select(playerId % 2);
             Resume();
 
             AudioManager.instance.PlayBgm(true);
