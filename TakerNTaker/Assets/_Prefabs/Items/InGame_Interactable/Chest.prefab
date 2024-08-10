@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5559468292916638006}
   - component: {fileID: 2787519035854042594}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: model
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -95,8 +95,8 @@ GameObject:
   - component: {fileID: 8727430054439988074}
   - component: {fileID: 4969038393995062419}
   - component: {fileID: 7837639482281301134}
-  m_Layer: 0
-  m_Name: Box
+  m_Layer: 7
+  m_Name: Chest
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

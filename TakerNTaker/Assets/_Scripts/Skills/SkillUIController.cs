@@ -1,7 +1,6 @@
 using IngameSkill;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -19,17 +18,42 @@ public class SkillUIController : MonoBehaviour
         }
     }
 
-    public void Bind(Action<PointerEventData> action, Action<PointerEventData> actionEx = null)
+    public void ChangeSkill(
+        SkillData data = null,
+        Action<PointerEventData> action = null,
+        Action<PointerEventData> actionEx = null)
+    {
+
+    }
+
+    public void UpdateSkill(
+        SkillData data = null ,
+        Action<PointerEventData> action = null,
+        Action<PointerEventData> actionEx = null)
+    {
+
+    }
+
+    public void BindSkill(
+        SkillData data,
+        Action<PointerEventData> action, 
+        Action<PointerEventData> actionEx = null)
     {
         var bt = GetEmptySlot();
         if(bt)
         {
-            bt.BindEvent(action, actionEx);
+            bt.BindEvent(data, action, actionEx);
         }
     }
 
     private SkillButton GetEmptySlot()
     {
-        return SlotDic.Select(pair => pair.Value).FirstOrDefault(value => value != null);
+        foreach (var pair in SlotDic)
+        {
+            if (pair.Value.IsEmpty())
+                return pair.Value;
+        }
+
+        return null; 
     }
 }

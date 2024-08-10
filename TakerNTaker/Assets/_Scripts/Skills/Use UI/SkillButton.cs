@@ -15,16 +15,20 @@ namespace IngameSkill
 
         public Action<PointerEventData> OnDownHandler = null;
         public Action<PointerEventData> OnUpHandler = null;
-
         [SerializeField] Image skillImage;
 
-        public void Init()
+        SkillData data;
+
+        public bool IsEmpty()
         {
-            skillImage.sprite = null;
+            return data == null;
         }
 
-        public void BindEvent(Action<PointerEventData> action,Action<PointerEventData> actionEx = null)
+        public void BindEvent(SkillData data, Action<PointerEventData> action,Action<PointerEventData> actionEx = null)
         {
+            this.data = data;
+            skillImage.sprite = data.skillIcon;
+
             OnDownHandler -= action;
             OnUpHandler -= actionEx;
             OnDownHandler += action;

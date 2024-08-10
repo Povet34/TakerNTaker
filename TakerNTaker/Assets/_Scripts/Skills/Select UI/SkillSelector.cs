@@ -10,7 +10,7 @@ public class SkillSelector : MonoBehaviour
 
     [SerializeField] GameObject selectSkillPrefab;
     [SerializeField] Transform skillGroup;
-    List<SelectSkill> selectSkills;
+    List<SelectSkill> selectSkills = new List<SelectSkill>();
 
     void Awake()
     {
@@ -37,15 +37,16 @@ public class SkillSelector : MonoBehaviour
 
     private void LoadSelectableSkills()
     {
-        var skillDatas = SkillDataMngr.instance.GetAll();
         DestoryRemainSkillSelectors();
 
-        selectSkills = new List<SelectSkill>();
+        var skillDatas = SkillDataMngr.instance.GetAll();
         for (int i = 0; i < skillDatas.Count; i++)
         {
             var go = Instantiate(selectSkillPrefab, skillGroup);
             var select = go.GetComponent<SelectSkill>();
             select.Init(skillDatas[i], Hide);
+
+            selectSkills.Add(select);
         }
     }
 
@@ -55,9 +56,9 @@ public class SkillSelector : MonoBehaviour
             return;
 
         foreach (var select in selectSkills) 
-        {
             Destroy(select.gameObject);
-        }
+        
+        selectSkills.Clear();
     }
     
     public void Select(int index)

@@ -12,18 +12,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ddeb2ef9ed7d7d4488a590af0b725605, type: 3}
   m_Name: TestSkill
   m_EditorClassIdentifier: 
-  skillType: 0
+  classType: 0
+  skillType: 1
   skillId: 0
   skillName: Test
   skillDesc: "\uD14C\uC2A4\uD2B8 \uC2A4\uD0AC\uC785\uB2C8\uB2E4."
   skillIcon: {fileID: 2129895255, guid: 99a24620d31e5ce4e823c32d11e17c2c, type: 3}
   baseDamage: 10
   baseCount: 10
+  baseRange: 0
   damages:
   - 10
   - 100
   counts: 0a00000064000000
-  coolTime: 10
-  duration: 10
-  requiredMana: 10
+  ranges: []
+  coolTime: []
+  duration: []
+  requiredMana: []
   projectile: {fileID: 0}

@@ -1,9 +1,12 @@
+using Goldmetal.UndeadSurvivor;
+
 namespace IngameSkill
 {
     public interface ISkill
     {
-        SkillUIController Controller { get; }
-        SkillData Data { get; }
+        Player player { get; set; }
+        SkillUIController Controller { get; set; }
+        SkillData Data { get; set; }
 
         public void Init(SkillData data);
 

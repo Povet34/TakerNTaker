@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ddeb2ef9ed7d7d4488a590af0b725605, type: 3}
+  m_Name: Under Fields
+  m_EditorClassIdentifier: 
+  classType: 0
+  skillType: 3
+  skillId: 1
+  skillName: "[\uC804\uC0AC] \uBD88\uC7A5\uD310 \uAE54\uAE30"
+  skillDesc: "\uD50C\uB808\uC774\uC5B4\uC758 \uBC14\uB85C \uC544\uB798\uC5D0 \uBD88
+    \uC7A5\uD310\uC744 \uAE5D\uB2C8\uB2E4."
+  skillIcon: {fileID: 154122315, guid: 0d5e657ee5a074e4baa53d5b248a01d2, type: 3}
+  baseDamage: 10
+  baseCount: 10
+  baseRange: 0
+  damages:
+  - 10
+  - 100
+  counts: 0a00000064000000
+  ranges: []
+  coolTime: []
+  duration: []
+  requiredMana: []
+  projectile: {fileID: 0}

@@ -1,4 +1,6 @@
 using InGameInteractable;
+using IngameSkill;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -18,6 +20,8 @@ namespace Goldmetal.UndeadSurvivor
         Rigidbody2D rigid;
         SpriteRenderer spriter;
         Animator anim;
+
+        private List<ISkill> equipedSkills = new List<ISkill>();
 
         void Awake()
         {
@@ -41,9 +45,6 @@ namespace Goldmetal.UndeadSurvivor
         {
             if (!GameManager.instance.isLive)
                 return;
-
-            //inputVec.x = Input.GetAxisRaw("Horizontal");
-            //inputVec.y = Input.GetAxisRaw("Vertical");
         }
 
         void FixedUpdate()
@@ -116,6 +117,71 @@ namespace Goldmetal.UndeadSurvivor
         void OnMove(InputValue value)
         {
             inputVec = value.Get<Vector2>();
+        }
+
+        public ISkill FindEquipedSkill(SkillData.eSkillType skillType)
+        {
+            if (null == equipedSkills)
+            {
+                equipedSkills = new List<ISkill>();
+                return null;
+            }
+
+            foreach(var sk in equipedSkills)
+            {
+                if (sk.Data.skillType == skillType)
+                    return sk;
+            }
+
+            return null;
+
+        }
+
+        public void AddEquipSkill(ISkill addSkill)
+        {
+            if (null == equipedSkills)
+            {
+                equipedSkills = new List<ISkill>();
+            }
+
+            if(equipedSkills.Count == 0)
+            {
+                FirstSkill(addSkill.Data.classType);
+            }
+
+            equipedSkills.Add(addSkill);
+        }
+
+        /// <summary>
+        /// If first skill.. you decided class
+        /// </summary>
+        /// <param name="type"></param>
+        void FirstSkill(SkillData.eClassType type)
+        {
+            //spriter 바꿔주고..
+            //class 정해주고
+            //평타 넣어준다.
+        }
+
+        public void RemoveEquipSkill(SkillData.eSkillType skillType)
+        {
+            if (null == equipedSkills)
+            {
+                equipedSkills = new List<ISkill>();
+                return;
+            }
+
+            ISkill removeTarget = null;
+            foreach (var sk in equipedSkills)
+            {
+                if (sk.Data.skillType == skillType)
+                {
+                    removeTarget = sk;
+                }
+            }
+
+            if(null != removeTarget)
+                equipedSkills.Remove(removeTarget);
         }
     }
 }

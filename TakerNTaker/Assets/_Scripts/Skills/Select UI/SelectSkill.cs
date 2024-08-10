@@ -1,4 +1,6 @@
+using Goldmetal.UndeadSurvivor;
 using System;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
@@ -9,7 +11,6 @@ namespace IngameSkill
     {
         public SkillData data;
         public int level;
-        public ISkill skill;
 
         Image icon;
         Text textLevel;
@@ -51,22 +52,44 @@ namespace IngameSkill
 
         public void OnClick(UnityAction selectCallback)
         {
+            var player = GameManager.instance.player;
+            if (null == player)
+                return;
+
+            ISkill sk = null;
+
             switch (data.skillType)
             {
-                case SkillData.eSkillType.None:
-                case SkillData.eSkillType.W_RUSH:
-                    if (level == 0)
+                case SkillData.eSkillType.TEST:
                     {
-                        skill = new GameObject("TestSkill").AddComponent<TestSkill>();
-                        skill.Init(data);
+                        sk = player.FindEquipedSkill(SkillData.eSkillType.TEST);
+                        if (null == sk)
+                        {
+                            sk = new GameObject(nameof(S_TestSkill)).AddComponent<S_TestSkill>();
+                            sk.Init(data);
+                            player.AddEquipSkill(sk);
+                        }
+                        else
+                        {
+                            sk.LevelUp();
+                        }
+                        break;
                     }
-                    else
+                case SkillData.eSkillType.W_FOOTS_UNDER_FIELD:
                     {
-                        skill.LevelUp();
+                        sk = player.FindEquipedSkill(SkillData.eSkillType.TEST);
+                        if (null == sk)
+                        {
+                            sk = new GameObject(nameof(S_FootsUnderField)).AddComponent<S_FootsUnderField>();
+                            sk.Init(data);
+                            player.AddEquipSkill(sk);
+                        }
+                        else
+                        {
+                            sk.LevelUp();
+                        }
+                        break;
                     }
-
-                    level++;
-                    break;
             }
 
             if (level == data.damages.Length)
@@ -77,7 +100,6 @@ namespace IngameSkill
             selectCallback?.Invoke();
         }
     }
-
 }
 
 
