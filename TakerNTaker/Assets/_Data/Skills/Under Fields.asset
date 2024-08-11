@@ -15,8 +15,8 @@ MonoBehaviour:
   classType: 0
   skillType: 3
   skillId: 1
-  skillName: "[\uC804\uC0AC] \uBD88\uC7A5\uD310 \uAE54\uAE30"
-  skillDesc: "\uD50C\uB808\uC774\uC5B4\uC758 \uBC14\uB85C \uC544\uB798\uC5D0 \uBD88
+  skillName: "[\uC804\uC0AC] \uBD88\uC7A5\uD310"
+  skillDesc: "\uD50C\uB808\uC774\uC5B4\uC758 \uBC14\uB85C \uC544\uB798\uC5D0\n\uBD88
     \uC7A5\uD310\uC744 \uAE5D\uB2C8\uB2E4."
   skillIcon: {fileID: 154122315, guid: 0d5e657ee5a074e4baa53d5b248a01d2, type: 3}
   baseDamage: 10

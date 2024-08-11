@@ -23,14 +23,14 @@ namespace IngameSkill
             Data = data;
 
             // Basic Set
-            name = $"{nameof(S_TestSkill)}{++level}";
+            name = $"{GetType().Name}{++level}";
             transform.parent = player.transform;
             transform.localPosition = Vector3.zero;
 
             Controller = FindObjectOfType<SkillUIController>();
 
-            Action<PointerEventData> action = (data) => { Debug.Log("BeginClick!"); };
-            Action<PointerEventData> actionEx = (data) => { Debug.Log("EndClick!"); };
+            Action<PointerEventData> action = (data) => { Debug.Log("S_TestSkill BeginClick!"); };
+            Action<PointerEventData> actionEx = (data) => { Debug.Log("S_TestSkill EndClick!"); };
 
             Controller.BindSkill(data, action, actionEx);
         }

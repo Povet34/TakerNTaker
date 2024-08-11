@@ -161,6 +161,22 @@ namespace Goldmetal.UndeadSurvivor
             //spriter 바꿔주고..
             //class 정해주고
             //평타 넣어준다.
+
+            switch (type)
+            {
+                case SkillData.eClassType.WARRIOR:
+                    {
+
+                    }break;
+                case SkillData.eClassType.ARCHER:
+                    {
+
+                    }break;
+                case SkillData.eClassType.MAGE:
+                    {
+
+                    }break;
+            }
         }
 
         public void RemoveEquipSkill(SkillData.eSkillType skillType)
