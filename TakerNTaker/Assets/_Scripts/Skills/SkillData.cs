@@ -11,6 +11,8 @@ namespace IngameSkill
             TEST,
             W_RUSH,                 //전사 돌진
             W_FOOTS_UNDER_FIELD,    //전사 발밑 장판
+            W_RANGE_ATTACK,         //전사 원거리 공격
+            
         }
 
         [Header("# Main Info")]
@@ -26,6 +28,7 @@ namespace IngameSkill
         public float baseDamage;
         public int baseCount;
         public float baseRange;
+        public float baseDuration;
 
         [Header("# Level Data")]
         public float[] damages;

@@ -1,5 +1,6 @@
 using Goldmetal.UndeadSurvivor;
 using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -28,11 +29,19 @@ namespace IngameSkill
 
             Controller = FindObjectOfType<SkillUIController>();
 
-            Action<PointerEventData> action = (data) => 
+            Action<PointerEventData> action = (PointerEventData) => 
             { 
-                Debug.Log("S_FootsUnderField BeginClick!"); 
+                if(Data.projectile)
+                {
+                    var field = Instantiate(Data.projectile, transform.position, Quaternion.identity);
+                    if(field)
+                    {
+                        field.transform.localScale = Vector3.one * Data.baseRange;
+                        StartCoroutine(DoCountdown(field, data.baseDuration));
+                    }
+                }
             };
-            Action<PointerEventData> actionEx = (data) => 
+            Action<PointerEventData> actionEx = (PointerEventData) => 
             {
                 Debug.Log("S_FootsUnderField EndClick!"); 
             };
@@ -41,9 +50,20 @@ namespace IngameSkill
             Controller.BindSkill(data, action, actionEx);
         }
 
+        IEnumerator DoCountdown(GameObject target, float duration)
+        {
+            yield return new WaitForSeconds(duration);
+            Destroy(target);
+        }
+
         public void LevelUp()
         {
             name = $"{nameof(S_FootsUnderField)}{++level}";
+        }
+
+        private void OnTriggerEnter2D(Collider2D collision)
+        {
+            
         }
     }
 }

@@ -21,7 +21,8 @@ MonoBehaviour:
   skillIcon: {fileID: 154122315, guid: 0d5e657ee5a074e4baa53d5b248a01d2, type: 3}
   baseDamage: 10
   baseCount: 10
-  baseRange: 0
+  baseRange: 3
+  baseDuration: 5
   damages:
   - 10
   - 100
@@ -30,4 +31,4 @@ MonoBehaviour:
   coolTime: []
   duration: []
   requiredMana: []
-  projectile: {fileID: 0}
+  projectile: {fileID: 1955712268476486474, guid: 7d687a13ca3c51c43b5d70dd16d0c5fe, type: 3}
