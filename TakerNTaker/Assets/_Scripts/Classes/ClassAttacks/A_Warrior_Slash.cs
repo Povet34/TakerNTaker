@@ -1,6 +1,7 @@
 using CodeMonkey.Utils;
 using Goldmetal.UndeadSurvivor;
 using System.Collections;
+using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -12,8 +13,10 @@ public class A_Warrior_Slash : MonoBehaviour, IClassAttack
     float timer;
     GameObject slashGo;
 
-    [SerializeField] float attackAngle = 45;
-    [SerializeField] float attackOnceCount = 2;
+    [SerializeField] float attackAngle = 90;
+    [SerializeField] float attackOnceCount = 10;
+
+    List<Vector3> attackPathPositions = new List<Vector3>();
 
     void Awake()
     {
@@ -50,6 +53,8 @@ public class A_Warrior_Slash : MonoBehaviour, IClassAttack
         {
             if (slashGo)
             {
+                attackPathPositions.Clear();
+
                 var playerForwardAngle = UtilsClass.GetAngleFromVector(player.CurrentPlayerLookVector);
                 var angleIncrese = attackAngle * 2 / attackOnceCount;
                 var perFrame = attackData.baseDuration / attackOnceCount;
@@ -61,16 +66,22 @@ public class A_Warrior_Slash : MonoBehaviour, IClassAttack
 
                 slashGo.SetActive(true);
 
+                //Set position
                 for (int o = 0; o < attackOnceCount; o++)
                 {
                     var targetVector = UtilsClass.GetVectorFromAngle(firstAngle + (angleIncrese * o));
-                    slashGo.transform.position = targetVector * attackData.baseRange + player.transform.position;
+                    attackPathPositions.Add(targetVector);
+                }
+
+                //Do Slash
+                for(int o = 0; o < attackPathPositions.Count; o++)
+                {
+                    slashGo.transform.position = attackPathPositions[o] * attackData.baseRange + player.transform.position;
 
                     yield return new WaitForSeconds(perFrame);
                 }
 
-                yield return new WaitForSeconds(0.05f);
-
+                yield return new WaitForSeconds(0.15f);
                 slashGo.SetActive(false);
             }
         }
