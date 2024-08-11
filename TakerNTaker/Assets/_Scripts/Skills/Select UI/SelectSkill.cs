@@ -77,7 +77,7 @@ namespace IngameSkill
                     }
                 case SkillData.eSkillType.W_FOOTS_UNDER_FIELD:
                     {
-                        sk = player.FindEquipedSkill(SkillData.eSkillType.TEST);
+                        sk = player.FindEquipedSkill(SkillData.eSkillType.W_FOOTS_UNDER_FIELD);
                         if (null == sk)
                         {
                             sk = new GameObject(nameof(S_FootsUnderField)).AddComponent<S_FootsUnderField>();

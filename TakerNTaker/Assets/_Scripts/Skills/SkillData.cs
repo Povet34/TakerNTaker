@@ -5,13 +5,6 @@ namespace IngameSkill
     [CreateAssetMenu(fileName = "Skill", menuName = "Scriptble Object/SkillData")]
     public class SkillData : ScriptableObject
     {
-        public enum eClassType
-        {
-            WARRIOR,
-            ARCHER,
-            MAGE,
-        }
-
         public enum eSkillType 
         {
             None,
@@ -21,7 +14,7 @@ namespace IngameSkill
         }
 
         [Header("# Main Info")]
-        public eClassType classType;
+        public Definitions.eClassType classType;
         public eSkillType skillType;
         public int skillId;
         public string skillName;

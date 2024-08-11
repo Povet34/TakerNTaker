@@ -1,8 +1,8 @@
 using InGameInteractable;
 using IngameSkill;
 using System;
-using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -22,6 +22,7 @@ namespace Goldmetal.UndeadSurvivor
         Animator anim;
 
         private List<ISkill> equipedSkills = new List<ISkill>();
+        public Vector3 CurrentPlayerLookVector { get; private set; }
 
         void Awake()
         {
@@ -57,7 +58,9 @@ namespace Goldmetal.UndeadSurvivor
 
             if(Vector2.zero != inputVec)
             {
-                viewSight.SetAimwDirection(inputVec.normalized);
+                CurrentPlayerLookVector = inputVec.normalized;
+
+                viewSight.SetAimwDirection(CurrentPlayerLookVector);
                 viewSight.UpdateSight(rigid.position);
             }
         }
@@ -134,7 +137,6 @@ namespace Goldmetal.UndeadSurvivor
             }
 
             return null;
-
         }
 
         public void AddEquipSkill(ISkill addSkill)
@@ -156,26 +158,32 @@ namespace Goldmetal.UndeadSurvivor
         /// If first skill.. you decided class
         /// </summary>
         /// <param name="type"></param>
-        void FirstSkill(SkillData.eClassType type)
+        void FirstSkill(Definitions.eClassType type)
         {
             //spriter 바꿔주고..
             //class 정해주고
             //평타 넣어준다.
 
-            switch (type)
+            var datas = AttackDataMngr.instance.GetClassCategory(type);
+            if(datas.Count > 0)
             {
-                case SkillData.eClassType.WARRIOR:
-                    {
+                var data = datas.First();
 
-                    }break;
-                case SkillData.eClassType.ARCHER:
-                    {
+                IClassAttack ca = null;
+                switch (data.attackType)
+                {
+                    case ClassAttackData.eAttackType.None:
+                    case ClassAttackData.eAttackType.TEST:
+                        {
 
-                    }break;
-                case SkillData.eClassType.MAGE:
-                    {
-
-                    }break;
+                        }break;
+                    case ClassAttackData.eAttackType.Warrior_Slash:
+                        {
+                            ca = new GameObject(nameof(A_Warrior_Slash)).AddComponent<A_Warrior_Slash>();
+                            ca.Init(data);
+                        }
+                        break;
+                }
             }
         }
 

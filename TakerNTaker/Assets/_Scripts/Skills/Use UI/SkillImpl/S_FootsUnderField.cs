@@ -7,8 +7,7 @@ namespace IngameSkill
 {
     public class S_FootsUnderField : MonoBehaviour, ISkill
     {
-        int level;
-
+        public int level { get; set; }
         public SkillUIController Controller { get; set; }
         public SkillData Data { get; set; }
         public Player player { get; set; }
