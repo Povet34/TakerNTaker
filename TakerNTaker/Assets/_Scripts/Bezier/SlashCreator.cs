@@ -1,15 +1,16 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 [RequireComponent(typeof(PathCreator))]
 [RequireComponent(typeof(MeshFilter))]
 [RequireComponent(typeof(MeshRenderer))]
-public class RoadCreator : MonoBehaviour {
+public class SlashCreator : MonoBehaviour {
 
     [Range(.05f, 1.5f)]
     public float spacing = 1;
-    public float roadWidth = 1;
+    public float slashWidth = 1;
     public bool autoUpdate;
     public float tiling = 1;
 
@@ -19,21 +20,21 @@ public class RoadCreator : MonoBehaviour {
     {
         if(autoUpdate)
         {
-            UpdateRoad();
+            UpdateSlash();
         }
     }
 
-    public void UpdateRoad()
+    public void UpdateSlash()
     {
         Path path = GetComponent<PathCreator>().path;
         points = path.CalculateEvenlySpacedPoints(spacing);
-        GetComponent<MeshFilter>().mesh = CreateRoadMesh(points, path.IsClosed);
+        GetComponent<MeshFilter>().mesh = CreateSlashMesh(points, path.IsClosed);
 
         int textureRepeat = Mathf.RoundToInt(tiling * points.Length * spacing * .05f);
         GetComponent<MeshRenderer>().sharedMaterial.mainTextureScale = new Vector2(1, textureRepeat);
     }
 
-    Mesh CreateRoadMesh(Vector2[] points, bool isClosed)
+    Mesh CreateSlashMesh(Vector2[] points, bool isClosed)
     {
         Vector3[] verts = new Vector3[points.Length * 2];
         Vector2[] uvs = new Vector2[verts.Length];
@@ -57,8 +58,8 @@ public class RoadCreator : MonoBehaviour {
             forward.Normalize();
             Vector2 left = new Vector2(-forward.y, forward.x);
 
-            verts[vertIndex] = points[i] + left * roadWidth * .5f;
-            verts[vertIndex + 1] = points[i] - left * roadWidth * .5f;
+            verts[vertIndex] = points[i] + left * slashWidth * .5f;
+            verts[vertIndex + 1] = points[i] - left * slashWidth * .5f;
 
             float completionPercent = i / (float)(points.Length - 1);
             float v = 1 - Mathf.Abs(2 * completionPercent - 1);
@@ -86,5 +87,10 @@ public class RoadCreator : MonoBehaviour {
         mesh.uv = uvs;
 
         return mesh;
+    }
+
+    public List<Vector2> GetPoints()
+    {
+        return points.ToList();
     }
 }
