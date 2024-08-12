@@ -1,12 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using IngameSkill;
 
     [CreateAssetMenu(fileName = "Attack", menuName = "Scriptble Object/AttackData")]
 public class ClassAttackData : ScriptableObject
 {
-
     public enum eAttackType
     {
         None,

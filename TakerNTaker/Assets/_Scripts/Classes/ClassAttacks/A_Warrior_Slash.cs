@@ -2,7 +2,6 @@ using CodeMonkey.Utils;
 using Goldmetal.UndeadSurvivor;
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class A_Warrior_Slash : MonoBehaviour, IClassAttack

@@ -18,6 +18,7 @@ namespace Goldmetal.UndeadSurvivor
         public FieldOfView viewSight;
 
         Rigidbody2D rigid;
+        PlayerInput playerInput;
         SpriteRenderer spriter;
         Animator anim;
 
@@ -31,6 +32,7 @@ namespace Goldmetal.UndeadSurvivor
             anim = GetComponent<Animator>();
             scanner = GetComponent<Scanner>();
             hands = GetComponentsInChildren<Hand>(true);
+            playerInput = GetComponent<PlayerInput>();
         }
 
         void OnEnable()
@@ -53,10 +55,14 @@ namespace Goldmetal.UndeadSurvivor
             if (!GameManager.instance.isLive)
                 return;
 
+            inputVec = playerInput.actions["Move"].ReadValue<Vector2>();
+
             Vector2 nextVec = inputVec.normalized * speed * Time.fixedDeltaTime;
             rigid.MovePosition(rigid.position + nextVec);
 
-            if(Vector2.zero != inputVec)
+            Debug.Log($"inputVec : {inputVec}");
+
+            if (Vector2.zero != inputVec)
             {
                 CurrentPlayerLookVector = inputVec.normalized;
 
