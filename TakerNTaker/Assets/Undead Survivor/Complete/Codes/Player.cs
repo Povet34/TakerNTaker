@@ -183,6 +183,12 @@ namespace Goldmetal.UndeadSurvivor
                             ca.Init(data);
                         }
                         break;
+                    case ClassAttackData.eAttackType.Warrior_DragSlash:
+                        {
+                            ca = new GameObject(nameof(A_Warrior_DragSlash)).AddComponent<A_Warrior_DragSlash>();
+                            ca.Init(data);
+                        }
+                        break;
                 }
             }
         }

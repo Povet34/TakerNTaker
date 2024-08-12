@@ -1555,6 +1555,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   datas:
+  - {fileID: 11400000, guid: dd7894028d616e442b12f605c27eb25a, type: 2}
   - {fileID: 11400000, guid: ccbca1592f5725b4babc1802f7001b0a, type: 2}
 --- !u!114 &315743070
 MonoBehaviour:
@@ -2342,7 +2343,7 @@ Camera:
   far clip plane: 5000
   field of view: 40
   orthographic: 1
-  orthographic size: 6.4
+  orthographic size: 10
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2

@@ -11,7 +11,8 @@ public class ClassAttackData : ScriptableObject
     {
         None,
         TEST,
-        Warrior_Slash,
+        Warrior_Slash,      //그냥 베기
+        Warrior_DragSlash   //끌어 베기
     }
 
     public Definitions.eClassType classType;
