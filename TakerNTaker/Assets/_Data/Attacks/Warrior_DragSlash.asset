@@ -22,5 +22,5 @@ MonoBehaviour:
   baseCount: 1
   baseRange: 5
   baseCoolTime: 2
-  baseDuration: 0.1
+  baseDuration: 0.05
   projectile: {fileID: 3172732655372800745, guid: db7e5c8be146c9b4fb622df8cf23ff6a, type: 3}

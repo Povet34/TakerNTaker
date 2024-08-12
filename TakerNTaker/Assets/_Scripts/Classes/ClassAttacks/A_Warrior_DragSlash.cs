@@ -75,9 +75,8 @@ public class A_Warrior_DragSlash : MonoBehaviour, IClassAttack
                 //Do Slash
                 for (int o = 0; o < attackPathPositions.Count; o++)
                 {
-                    slashGo.transform.position = attackPathPositions[o] * attackData.baseRange + player.transform.position;
-
                     yield return new WaitForSeconds(perFrame);
+                    slashGo.transform.position = attackPathPositions[o] * attackData.baseRange + player.transform.position;
                 }
 
                 slashGo.transform.position = player.transform.position;

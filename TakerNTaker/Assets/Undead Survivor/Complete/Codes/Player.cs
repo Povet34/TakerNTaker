@@ -60,8 +60,6 @@ namespace Goldmetal.UndeadSurvivor
             Vector2 nextVec = inputVec.normalized * speed * Time.fixedDeltaTime;
             rigid.MovePosition(rigid.position + nextVec);
 
-            Debug.Log($"inputVec : {inputVec}");
-
             if (Vector2.zero != inputVec)
             {
                 CurrentPlayerLookVector = inputVec.normalized;
