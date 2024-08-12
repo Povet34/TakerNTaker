@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
     [CreateAssetMenu(fileName = "Attack", menuName = "Scriptble Object/AttackData")]
@@ -8,7 +9,8 @@ public class ClassAttackData : ScriptableObject
         None,
         TEST,
         Warrior_Slash,      //그냥 베기
-        Warrior_DragSlash   //끌어 베기
+        Warrior_DragSlash,  //끌어 베기
+        Warrior_DubbleSlash,
     }
 
     public Definitions.eClassType classType;
@@ -29,4 +31,10 @@ public class ClassAttackData : ScriptableObject
 
     [Header("# Weapon")]
     public GameObject projectile;
+    public List<Vector2> trajectories;
+
+    public void SetTrajectories(List<Vector2> points)
+    {
+        trajectories = points;
+    }
 }

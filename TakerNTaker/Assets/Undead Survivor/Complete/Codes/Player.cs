@@ -24,6 +24,8 @@ namespace Goldmetal.UndeadSurvivor
 
         private List<ISkill> equipedSkills = new List<ISkill>();
         public Vector3 CurrentPlayerLookVector { get; private set; }
+        public Vector2 GetPosXY() => new Vector2(transform.position.x, transform.position.y);
+        public Vector3 GetPosXYZ() => transform.position;
 
         void Awake()
         {
@@ -190,6 +192,12 @@ namespace Goldmetal.UndeadSurvivor
                     case ClassAttackData.eAttackType.Warrior_DragSlash:
                         {
                             ca = new GameObject(nameof(A_Warrior_DragSlash)).AddComponent<A_Warrior_DragSlash>();
+                            ca.Init(data);
+                        }
+                        break;                    
+                    case ClassAttackData.eAttackType.Warrior_DubbleSlash:
+                        {
+                            ca = new GameObject(nameof(A_Warrior_DubbleSlash)).AddComponent<A_Warrior_DubbleSlash>();
                             ca.Init(data);
                         }
                         break;

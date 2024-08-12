@@ -1,0 +1,39 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 820dc123883690647a2e13a6a7359535, type: 3}
+  m_Name: Warrior_DubbleSlash
+  m_EditorClassIdentifier: 
+  classType: 0
+  attackType: 4
+  attackId: 0
+  attackName: "\uC774\uC5F0\uACA9"
+  attackDesc: "\uB450\uBC88 \uBCB0"
+  attackIcon: {fileID: 762804792, guid: 0d5e657ee5a074e4baa53d5b248a01d2, type: 3}
+  baseDamage: 10
+  baseCount: 1
+  baseRange: 1.5
+  baseCoolTime: 4
+  baseDuration: 0.1
+  projectile: {fileID: 3172732655372800745, guid: 30a363da973a9ce4faea0f23e7e180de, type: 3}
+  trajectories:
+  - {x: 0.4699492, y: 0.058056027}
+  - {x: 1.7430164, y: 0.53846496}
+  - {x: 2.8478637, y: 1.3253511}
+  - {x: 2.9803317, y: 2.4070735}
+  - {x: 1.7664735, y: 1.8466427}
+  - {x: 0.7783741, y: 0.91005117}
+  - {x: -0.08343032, y: -0.14473511}
+  - {x: 0.6146818, y: -0.21755502}
+  - {x: 1.7383723, y: 0.5528774}
+  - {x: 2.7288232, y: 1.4706727}
+  - {x: 1.5099454, y: 0.92675364}
+  - {x: 0.33984244, y: 0.22783625}
