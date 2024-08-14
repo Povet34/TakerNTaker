@@ -54,27 +54,29 @@ public class A_Warrior_DubbleSlash : MonoBehaviour, IClassAttack
             {
                 attackPathPositions.Clear();
 
-                var playerForwardAngle = UtilsClass.GetAngleFromVector(player.CurrentPlayerLookVector);
-                var angleIncrese = attackAngle * 2 / attackOnceCount;
                 var perFrame = attackData.baseDuration / attackOnceCount;
-
-                slashGo.transform.position = attackData.trajectories[0];
-
+                slashGo.transform.position = GetTrajectoryPosition(attackData.trajectories[0]);
+                
                 slashGo.SetActive(true);
 
                 //Do Slash
                 for (int o = 0; o < attackData.trajectories.Count; o++)
                 {
+                    transform.rotation = Quaternion.Euler(0,0, UtilsClass.GetAngleFromVector(player.CurrentPlayerLookVector));
                     yield return new WaitForSeconds(perFrame);
-                    slashGo.transform.position = attackData.trajectories[o] * attackData.baseRange + player.GetPosXY();
+                    slashGo.transform.localPosition = GetTrajectoryPosition(attackData.trajectories[o], true);
                 }
 
-                slashGo.transform.position = attackData.trajectories[0];
+                slashGo.transform.position = GetTrajectoryPosition(attackData.trajectories[0]);
 
                 yield return new WaitForSeconds(0.15f);
                 slashGo.SetActive(false);
             }
         }
+    }
+    public Vector2 GetTrajectoryPosition(Vector2 trajectory, bool muitiflyRange = false)
+    {
+        return trajectory * (muitiflyRange ? attackData.baseRange : 1) + player.GetPosXY();
     }
 
     public void LevelUp()
