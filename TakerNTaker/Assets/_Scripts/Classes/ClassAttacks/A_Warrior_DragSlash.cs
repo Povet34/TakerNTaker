@@ -2,6 +2,7 @@ using CodeMonkey.Utils;
 using Goldmetal.UndeadSurvivor;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.SceneManagement;
 using UnityEngine;
 
 public class A_Warrior_DragSlash : MonoBehaviour, IClassAttack
@@ -16,6 +17,7 @@ public class A_Warrior_DragSlash : MonoBehaviour, IClassAttack
     [SerializeField] float attackOnceCount = 10;
 
     List<Vector3> attackPathPositions = new List<Vector3>();
+    
     void Awake()
     {
         player = GameManager.instance.player;

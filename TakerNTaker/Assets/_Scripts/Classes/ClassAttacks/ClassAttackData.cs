@@ -13,8 +13,17 @@ public class ClassAttackData : ScriptableObject
         Warrior_DubbleSlash,
     }
 
+    public enum eCollisionType
+    {
+        None,
+        Trajectory,     //Tail의 궤적
+        Range,          //공격하는 모든 범위
+        Point           //특정 지점
+    }
+
     public Definitions.eClassType classType;
     public eAttackType attackType;
+    public eCollisionType collisionType;
 
     public int attackId;
     public string attackName;

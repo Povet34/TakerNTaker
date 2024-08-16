@@ -170,38 +170,33 @@ namespace Goldmetal.UndeadSurvivor
             //class 정해주고
             //평타 넣어준다.
 
-            var datas = AttackDataMngr.instance.GetClassCategory(type);
-            if(datas.Count > 0)
+            var data = AttackDataMngr.instance.GetRandomClassAttack(type);
+            IClassAttack ca = null;
+            switch (data.attackType)
             {
-                var data = datas.First();
+                case ClassAttackData.eAttackType.None:
+                case ClassAttackData.eAttackType.TEST:
+                    {
 
-                IClassAttack ca = null;
-                switch (data.attackType)
-                {
-                    case ClassAttackData.eAttackType.None:
-                    case ClassAttackData.eAttackType.TEST:
-                        {
-
-                        }break;
-                    case ClassAttackData.eAttackType.Warrior_Slash:
-                        {
-                            ca = new GameObject(nameof(A_Warrior_Slash)).AddComponent<A_Warrior_Slash>();
-                            ca.Init(data);
-                        }
-                        break;
-                    case ClassAttackData.eAttackType.Warrior_DragSlash:
-                        {
-                            ca = new GameObject(nameof(A_Warrior_DragSlash)).AddComponent<A_Warrior_DragSlash>();
-                            ca.Init(data);
-                        }
-                        break;                    
-                    case ClassAttackData.eAttackType.Warrior_DubbleSlash:
-                        {
-                            ca = new GameObject(nameof(A_Warrior_DubbleSlash)).AddComponent<A_Warrior_DubbleSlash>();
-                            ca.Init(data);
-                        }
-                        break;
-                }
+                    }break;
+                case ClassAttackData.eAttackType.Warrior_Slash:
+                    {
+                        ca = new GameObject(nameof(A_Warrior_Slash)).AddComponent<A_Warrior_Slash>();
+                        ca.Init(data);
+                    }
+                    break;
+                case ClassAttackData.eAttackType.Warrior_DragSlash:
+                    {
+                        ca = new GameObject(nameof(A_Warrior_DragSlash)).AddComponent<A_Warrior_DragSlash>();
+                        ca.Init(data);
+                    }
+                    break;                    
+                case ClassAttackData.eAttackType.Warrior_DubbleSlash:
+                    {
+                        ca = new GameObject(nameof(A_Warrior_DubbleSlash)).AddComponent<A_Warrior_DubbleSlash>();
+                        ca.Init(data);
+                    }
+                    break;
             }
         }
 

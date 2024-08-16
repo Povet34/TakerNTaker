@@ -26,4 +26,17 @@ public class AttackDataMngr : MonoBehaviour
         }
         return result;
     }
+
+    public ClassAttackData GetRandomClassAttack(Definitions.eClassType type)
+    {
+        if(type == Definitions.eClassType.None)
+        {
+            return datas[Random.Range(0, datas.Count - 1)];
+        }
+        else
+        {
+            var classes = GetClassCategory(type);
+            return classes[Random.Range(0, classes.Count - 1)];
+        }
+    }
 }
