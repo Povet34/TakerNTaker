@@ -7,7 +7,7 @@ using UnityEngine;
 public class A_Warrior_Slash : MonoBehaviour, IClassAttack
 {
     public Player player { get; set; }
-    public ClassAttackData attackData { get; set; }
+    public ClassAttackData Data { get; set; }
 
     float timer;
     GameObject slashGo;
@@ -24,7 +24,7 @@ public class A_Warrior_Slash : MonoBehaviour, IClassAttack
 
     public void Init(ClassAttackData data)
     {
-        attackData = data;
+        Data = data;
 
         name = $"{GetType().Name}";
         transform.parent = player.transform;
@@ -35,10 +35,10 @@ public class A_Warrior_Slash : MonoBehaviour, IClassAttack
 
     private void Update()
     {
-        if(null != attackData)
+        if(null != Data)
         {
             timer += Time.deltaTime;
-            if (timer > attackData.baseCoolTime)
+            if (timer > Data.baseCoolTime)
             {
                 timer = 0;
                 StartCoroutine(DoSlash());
@@ -48,7 +48,7 @@ public class A_Warrior_Slash : MonoBehaviour, IClassAttack
 
     IEnumerator DoSlash()
     {
-        for(int i = 0; i < attackData.baseCount; i++)
+        for(int i = 0; i < Data.baseCount; i++)
         {
             if (slashGo)
             {
@@ -56,12 +56,12 @@ public class A_Warrior_Slash : MonoBehaviour, IClassAttack
 
                 var playerForwardAngle = UtilsClass.GetAngleFromVector(player.CurrentPlayerLookVector);
                 var angleIncrese = attackAngle * 2 / attackOnceCount;
-                var perFrame = attackData.baseDuration / attackOnceCount;
+                var perFrame = Data.baseDuration / attackOnceCount;
 
                 //초기세팅
                 var firstAngle =  playerForwardAngle - attackAngle;
                 var firstPos = UtilsClass.GetVectorFromAngle(firstAngle);
-                slashGo.transform.position = firstPos * attackData.baseRange + player.transform.position;
+                slashGo.transform.position = firstPos * Data.baseRange + player.transform.position;
 
                 slashGo.SetActive(true);
 
@@ -75,7 +75,7 @@ public class A_Warrior_Slash : MonoBehaviour, IClassAttack
                 //Do Slash
                 for(int o = 0; o < attackPathPositions.Count; o++)
                 {
-                    slashGo.transform.position = attackPathPositions[o] * attackData.baseRange + player.transform.position;
+                    slashGo.transform.position = attackPathPositions[o] * Data.baseRange + player.transform.position;
 
                     yield return new WaitForSeconds(perFrame);
                 }

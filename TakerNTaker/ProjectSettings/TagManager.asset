@@ -9,6 +9,7 @@ TagManager:
   - Area
   - Enemy
   - InGameInteractable
+  - Attack
   layers:
   - Default
   - TransparentFX

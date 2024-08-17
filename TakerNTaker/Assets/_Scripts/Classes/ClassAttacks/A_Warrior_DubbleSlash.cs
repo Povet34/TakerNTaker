@@ -7,13 +7,12 @@ using UnityEngine;
 public class A_Warrior_DubbleSlash : MonoBehaviour, IClassAttack, IHitdetection
 {
     public Player player { get; set; }
-    public ClassAttackData attackData { get; set; }
+    public ClassAttackData Data { get; set; }
 
     float timer;
     GameObject slashGo;
 
-    [SerializeField] float attackAngle = 30;
-    [SerializeField] float attackOnceCount = 10;
+    float attackOnceCount = 10;
 
     List<Vector3> attackPathPositions = new List<Vector3>();
     public Collider2D collider { get; set; }
@@ -22,11 +21,12 @@ public class A_Warrior_DubbleSlash : MonoBehaviour, IClassAttack, IHitdetection
     {
         player = GameManager.instance.player;
         collider = CreateCollider();
+        gameObject.tag = IClassAttack.TAG_ATTACK;
     }
 
     public void Init(ClassAttackData data)
     {
-        attackData = data;
+        Data = data;
 
         name = $"{GetType().Name}";
         transform.parent = player.transform;
@@ -37,10 +37,10 @@ public class A_Warrior_DubbleSlash : MonoBehaviour, IClassAttack, IHitdetection
 
     private void Update()
     {
-        if (null != attackData)
+        if (null != Data)
         {
             timer += Time.deltaTime;
-            if (timer > attackData.baseCoolTime)
+            if (timer > Data.baseCoolTime)
             {
                 timer = 0;
                 StartCoroutine(DoSlash());
@@ -51,22 +51,23 @@ public class A_Warrior_DubbleSlash : MonoBehaviour, IClassAttack, IHitdetection
 
     IEnumerator DoSlash()
     {
-        for (int i = 0; i < attackData.baseCount; i++)
+        for (int i = 0; i < Data.baseCount; i++)
         {
             if (slashGo)
             {
                 attackPathPositions.Clear();
 
-                var perFrame = attackData.baseDuration / attackOnceCount;
-                slashGo.transform.position = GetTrajectoryPosition(attackData.trajectories[0]);
+                var perFrame = Data.baseDuration / attackOnceCount;
+                slashGo.transform.position = GetTrajectoryPosition(Data.trajectories[0]);
                 
                 slashGo.SetActive(true);
+                collider.enabled = true;
 
                 //Do Slash
                 List<Vector2> trajectories = new List<Vector2>();
-                for(int o = 0; o < attackData.trajectories.Count; o++)
+                for(int o = 0; o < Data.trajectories.Count; o++)
                 {
-                    trajectories.Add(attackData.trajectories[o] * attackData.baseRange);
+                    trajectories.Add(Data.trajectories[o] * Data.baseRange);
                 }
 
                 if(collider is PolygonCollider2D polygon)
@@ -74,7 +75,7 @@ public class A_Warrior_DubbleSlash : MonoBehaviour, IClassAttack, IHitdetection
                     polygon.points = trajectories.ToArray();
                 }
                 
-                for (int o = 0; o < attackData.trajectories.Count; o++)
+                for (int o = 0; o < Data.trajectories.Count; o++)
                 {
                     transform.rotation = Quaternion.Euler(0,0, UtilsClass.GetAngleFromVector(player.CurrentPlayerLookVector));
 
@@ -83,16 +84,17 @@ public class A_Warrior_DubbleSlash : MonoBehaviour, IClassAttack, IHitdetection
                 }
 
 
-                slashGo.transform.position = GetTrajectoryPosition(attackData.trajectories[0]);
+                slashGo.transform.position = GetTrajectoryPosition(Data.trajectories[0]);
 
                 yield return new WaitForSeconds(0.15f);
                 slashGo.SetActive(false);
+                collider.enabled = false;
             }
         }
     }
     public Vector2 GetTrajectoryPosition(Vector2 trajectory, bool muitiflyRange = false)
     {
-        return trajectory * (muitiflyRange ? attackData.baseRange : 1) + player.GetPosXY();
+        return trajectory * (muitiflyRange ? Data.baseRange : 1) + player.GetPosXY();
     }
 
     public void LevelUp()
