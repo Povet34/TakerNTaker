@@ -12,9 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 820dc123883690647a2e13a6a7359535, type: 3}
   m_Name: Warrior_DubbleSlash
   m_EditorClassIdentifier: 
-  classType: 0
+  classType: 1
   attackType: 4
-  attackId: 0
+  collisionType: 0
+  attackId: 2
   attackName: "\uC774\uC5F0\uACA9"
   attackDesc: "\uB450\uBC88 \uBCB0"
   attackIcon: {fileID: 762804792, guid: 0d5e657ee5a074e4baa53d5b248a01d2, type: 3}

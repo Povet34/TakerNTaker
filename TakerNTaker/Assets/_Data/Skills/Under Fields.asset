@@ -31,4 +31,5 @@ MonoBehaviour:
   coolTime: []
   duration: []
   requiredMana: []
-  projectile: {fileID: 1955712268476486474, guid: 7d687a13ca3c51c43b5d70dd16d0c5fe, type: 3}
+  projectiles:
+  - {fileID: 1955712268476486474, guid: 7d687a13ca3c51c43b5d70dd16d0c5fe, type: 3}

@@ -99,10 +99,14 @@ namespace Goldmetal.UndeadSurvivor
 
         IEnumerator KnockBack()
         {
+            spriter.color = Color.white;
             yield return wait; // 다음 하나의 물리 프레임 딜레이
             Vector3 playerPos = GameManager.instance.player.transform.position;
             Vector3 dirVec = transform.position - playerPos;
             rigid.AddForce(dirVec.normalized * 30, ForceMode2D.Impulse);
+
+            yield return new WaitForSeconds(0.1f);
+            spriter.color = Color.red;
         }
 
         void Dead()

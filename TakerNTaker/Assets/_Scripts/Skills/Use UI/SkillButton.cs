@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 namespace IngameSkill 
 {
-    public class SkillButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
+    public class SkillButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IPointerMoveHandler
     {
         public enum Type
         {
@@ -15,6 +15,7 @@ namespace IngameSkill
 
         public Action<PointerEventData> OnDownHandler = null;
         public Action<PointerEventData> OnUpHandler = null;
+        public Action<PointerEventData> OnMoveHandler = null;
         [SerializeField] Image skillImage;
 
         SkillData data;
@@ -24,15 +25,18 @@ namespace IngameSkill
             return data == null;
         }
 
-        public void BindEvent(SkillData data, Action<PointerEventData> action,Action<PointerEventData> actionEx = null)
+        public void BindEvent(SkillData data, Action<PointerEventData> actionEn, Action<PointerEventData> actionEx = null, Action<PointerEventData> actionMove = null)
         {
             this.data = data;
             skillImage.sprite = data.skillIcon;
 
-            OnDownHandler -= action;
+            OnDownHandler -= actionEn;
             OnUpHandler -= actionEx;
-            OnDownHandler += action;
+            OnMoveHandler -= actionMove;
+
+            OnDownHandler += actionEn;
             OnUpHandler += actionEx;
+            OnMoveHandler += actionMove;
         }
 
         public void OnPointerDown(PointerEventData eventData)
@@ -45,6 +49,12 @@ namespace IngameSkill
         {
             if (OnUpHandler != null)
                 OnUpHandler.Invoke(eventData);
+        }
+
+        public void OnPointerMove(PointerEventData eventData)
+        {
+            if (OnMoveHandler != null)
+                OnMoveHandler.Invoke(eventData);
         }
     }
 }

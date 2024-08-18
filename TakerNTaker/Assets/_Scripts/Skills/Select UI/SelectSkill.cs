@@ -42,7 +42,10 @@ namespace IngameSkill
             {
                 case SkillData.eSkillType.None:
                 case SkillData.eSkillType.W_RUSH:
-                    textDesc.text = string.Format(data.skillDesc, data.damages[level] * 100, data.counts[level]);
+                case SkillData.eSkillType.W_RANGE_ATTACK:
+                case SkillData.eSkillType.W_FOOTS_UNDER_FIELD:
+                case SkillData.eSkillType.W_GRANADE:
+                    textDesc.text = string.Format(data.skillDesc, data.damages[level], data.counts[level]);
                     break;
                 default:
                     textDesc.text = string.Format(data.skillDesc);
@@ -81,6 +84,21 @@ namespace IngameSkill
                         if (null == sk)
                         {
                             sk = new GameObject(nameof(S_FootsUnderField)).AddComponent<S_FootsUnderField>();
+                            sk.Init(data);
+                            player.AddEquipSkill(sk);
+                        }
+                        else
+                        {
+                            sk.LevelUp();
+                        }
+                        break;
+                    }
+                case SkillData.eSkillType.W_GRANADE:
+                    {
+                        sk = player.FindEquipedSkill(SkillData.eSkillType.W_GRANADE);
+                        if (null == sk)
+                        {
+                            sk = new GameObject(nameof(S_Grenade)).AddComponent<S_Grenade>();
                             sk.Init(data);
                             player.AddEquipSkill(sk);
                         }

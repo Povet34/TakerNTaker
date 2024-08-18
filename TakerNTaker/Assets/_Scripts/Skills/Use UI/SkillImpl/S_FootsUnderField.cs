@@ -1,6 +1,7 @@
 using Goldmetal.UndeadSurvivor;
 using System;
 using System.Collections;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -31,9 +32,9 @@ namespace IngameSkill
 
             Action<PointerEventData> action = (PointerEventData) => 
             { 
-                if(Data.projectile)
+                if(Data.projectiles.First())
                 {
-                    var field = Instantiate(Data.projectile, transform.position, Quaternion.identity);
+                    var field = Instantiate(Data.projectiles.First(), transform.position, Quaternion.identity);
                     if(field)
                     {
                         field.transform.localScale = Vector3.one * Data.baseRange;

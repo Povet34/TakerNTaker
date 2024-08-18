@@ -12,8 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 820dc123883690647a2e13a6a7359535, type: 3}
   m_Name: Warrior_DragSlash
   m_EditorClassIdentifier: 
-  classType: 0
+  classType: 1
   attackType: 3
+  collisionType: 0
   attackId: 3
   attackName: "\uB04C\uC5B4 \uBCA0\uAE30"
   attackDesc: "\uB04C\uC5B4\uBCB0"
@@ -24,3 +25,4 @@ MonoBehaviour:
   baseCoolTime: 2
   baseDuration: 0.05
   projectile: {fileID: 3172732655372800745, guid: db7e5c8be146c9b4fb622df8cf23ff6a, type: 3}
+  trajectories: []

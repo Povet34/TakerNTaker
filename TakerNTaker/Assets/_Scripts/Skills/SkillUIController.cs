@@ -37,12 +37,13 @@ public class SkillUIController : MonoBehaviour
     public void BindSkill(
         SkillData data,
         Action<PointerEventData> action, 
-        Action<PointerEventData> actionEx = null)
+        Action<PointerEventData> actionEx = null,
+        Action<PointerEventData> actionMo = null)
     {
         var bt = GetEmptySlot();
         if(bt)
         {
-            bt.BindEvent(data, action, actionEx);
+            bt.BindEvent(data, action, actionEx, actionMo);
         }
     }
 

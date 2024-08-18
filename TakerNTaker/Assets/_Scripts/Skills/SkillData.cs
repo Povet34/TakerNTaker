@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace IngameSkill
@@ -12,7 +13,7 @@ namespace IngameSkill
             W_RUSH,                 //전사 돌진
             W_FOOTS_UNDER_FIELD,    //전사 발밑 장판
             W_RANGE_ATTACK,         //전사 원거리 공격
-            
+            W_GRANADE,              //전사 그레네이드
         }
 
         [Header("# Main Info")]
@@ -39,6 +40,6 @@ namespace IngameSkill
         public float[] requiredMana;
 
         [Header("# Weapon")]
-        public GameObject projectile;
+        public List<GameObject> projectiles;
     }
 }

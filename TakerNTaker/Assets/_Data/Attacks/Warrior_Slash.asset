@@ -12,8 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 820dc123883690647a2e13a6a7359535, type: 3}
   m_Name: Warrior_Slash
   m_EditorClassIdentifier: 
-  classType: 0
+  classType: 1
   attackType: 2
+  collisionType: 0
   attackId: 1
   attackName: "\uD718\uB450\uB974\uAE30"
   attackDesc: "\uC804\uBC29\uC73C\uB85C \uD718\uB450\uB985\uB2C8\uB2E4."
