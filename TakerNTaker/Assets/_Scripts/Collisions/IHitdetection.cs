@@ -3,7 +3,6 @@ using UnityEngine;
 
 public interface IHitdetection
 {
-    Collider2D collider { get; set; }
+    Collider2D hitBox { get; set; }
     Collider2D CreateCollider();
-    Rect GetBounds(List<Vector2> points);
 }

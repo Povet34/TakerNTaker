@@ -2,25 +2,23 @@ using CodeMonkey.Utils;
 using Goldmetal.UndeadSurvivor;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.SceneManagement;
 using UnityEngine;
 
-public class A_Warrior_DragSlash : MonoBehaviour, IClassAttack
+public class A_Warrior_DragSlash : MonoBehaviour, IClassAttack, IHitdetection
 {
     public Player player { get; set; }
     public ClassAttackData Data { get; set; }
+    public Collider2D hitBox { get; set; }
 
     float timer;
     GameObject slashGo;
-
-    [SerializeField] float attackAngle = 30;
-    [SerializeField] float attackOnceCount = 10;
-
     List<Vector3> attackPathPositions = new List<Vector3>();
     
     void Awake()
     {
         player = GameManager.instance.player;
+        hitBox = CreateCollider();
+        gameObject.tag = IClassAttack.TAG_ATTACK;
     }
 
     public void Init(ClassAttackData data)
@@ -47,7 +45,6 @@ public class A_Warrior_DragSlash : MonoBehaviour, IClassAttack
         }
     }
 
-
     IEnumerator DoSlash()
     {
         for (int i = 0; i < Data.baseCount; i++)
@@ -56,41 +53,63 @@ public class A_Warrior_DragSlash : MonoBehaviour, IClassAttack
             {
                 attackPathPositions.Clear();
 
-                var playerForwardAngle = UtilsClass.GetAngleFromVector(player.CurrentPlayerLookVector);
-                var angleIncrese = attackAngle * 2 / attackOnceCount;
-                var perFrame = Data.baseDuration / attackOnceCount;
+                var perFrame = Data.baseDuration / Data.trajectories.Count;
+                var initPos = GetTrajectoryPosition(Data.trajectories[0]);
 
-                //초기세팅
-                var firstAngle = playerForwardAngle - attackAngle;
-                var firstPos = UtilsClass.GetVectorFromAngle(firstAngle);
-                slashGo.transform.position = player.transform.position;
+                slashGo.transform.position = initPos;
+                Enable(true);
 
-                slashGo.SetActive(true);
-
-                //Set position
-                for (int o = 0; o < attackOnceCount; o++)
-                {
-                    var targetVector = UtilsClass.GetVectorFromAngle(firstAngle + (angleIncrese * o));
-                    attackPathPositions.Add(targetVector);
-                }
+                transform.rotation = Quaternion.Euler(0, 0, UtilsClass.GetAngleFromVector(player.CurrentPlayerLookVector));
 
                 //Do Slash
-                for (int o = 0; o < attackPathPositions.Count; o++)
+                List<Vector2> trajectories = new List<Vector2>();
+                for (int o = 0; o < Data.trajectories.Count; o++)
                 {
-                    yield return new WaitForSeconds(perFrame);
-                    slashGo.transform.position = attackPathPositions[o] * Data.baseRange + player.transform.position;
+                    trajectories.Add(Data.trajectories[o] * Data.baseRange);
                 }
 
-                slashGo.transform.position = player.transform.position;
+                if (hitBox is PolygonCollider2D polygon)
+                {
+                    polygon.points = trajectories.ToArray();
+                }
+
+                for (int o = 0; o < trajectories.Count; o++)
+                {
+                    yield return new WaitForSeconds(perFrame);
+                    slashGo.transform.localPosition = trajectories[o];
+                }
+
+                slashGo.transform.position = initPos;
 
                 yield return new WaitForSeconds(0.15f);
-                slashGo.SetActive(false);
+                Enable(false);
             }
         }
+    }
+
+    public Vector2 GetTrajectoryPosition(Vector2 trajectory, bool muitiflyRange = false)
+    {
+        return trajectory * (muitiflyRange ? Data.baseRange : 1) + player.GetPosXY();
     }
 
     public void LevelUp()
     {
         throw new System.NotImplementedException();
+    }
+
+    public void Enable(bool isOn)
+    {
+        if (slashGo)
+            slashGo.SetActive(isOn);
+
+        if (hitBox)
+            hitBox.enabled = isOn;
+    }
+
+    public Collider2D CreateCollider()
+    {
+        var collider = gameObject.AddComponent<PolygonCollider2D>();
+        collider.isTrigger = true;
+        return collider;
     }
 }

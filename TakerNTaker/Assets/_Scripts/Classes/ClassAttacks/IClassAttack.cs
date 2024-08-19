@@ -8,4 +8,5 @@ public interface IClassAttack
     ClassAttackData Data { get; set; }
     public void Init(ClassAttackData data);
     public void LevelUp();
+    public void Enable(bool isOn);
 }

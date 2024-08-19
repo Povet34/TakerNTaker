@@ -8,19 +8,16 @@ public class A_Warrior_DubbleSlash : MonoBehaviour, IClassAttack, IHitdetection
 {
     public Player player { get; set; }
     public ClassAttackData Data { get; set; }
+    public Collider2D hitBox { get; set; }
 
     float timer;
     GameObject slashGo;
-
-    float attackOnceCount = 10;
-
     List<Vector3> attackPathPositions = new List<Vector3>();
-    public Collider2D collider { get; set; }
 
     void Awake()
     {
         player = GameManager.instance.player;
-        collider = CreateCollider();
+        hitBox = CreateCollider();
         gameObject.tag = IClassAttack.TAG_ATTACK;
     }
 
@@ -57,11 +54,13 @@ public class A_Warrior_DubbleSlash : MonoBehaviour, IClassAttack, IHitdetection
             {
                 attackPathPositions.Clear();
 
-                var perFrame = Data.baseDuration / attackOnceCount;
-                slashGo.transform.position = GetTrajectoryPosition(Data.trajectories[0]);
-                
-                slashGo.SetActive(true);
-                collider.enabled = true;
+                var perFrame = Data.baseDuration / Data.trajectories.Count;
+                var initPos = GetTrajectoryPosition(Data.trajectories[0]);
+
+                slashGo.transform.position = initPos;
+                Enable(true);
+
+                transform.rotation = Quaternion.Euler(0, 0, UtilsClass.GetAngleFromVector(player.CurrentPlayerLookVector));
 
                 //Do Slash
                 List<Vector2> trajectories = new List<Vector2>();
@@ -70,25 +69,21 @@ public class A_Warrior_DubbleSlash : MonoBehaviour, IClassAttack, IHitdetection
                     trajectories.Add(Data.trajectories[o] * Data.baseRange);
                 }
 
-                if(collider is PolygonCollider2D polygon)
+                if(hitBox is PolygonCollider2D polygon)
                 {
                     polygon.points = trajectories.ToArray();
                 }
                 
-                for (int o = 0; o < Data.trajectories.Count; o++)
+                for (int o = 0; o < trajectories.Count; o++)
                 {
-                    transform.rotation = Quaternion.Euler(0,0, UtilsClass.GetAngleFromVector(player.CurrentPlayerLookVector));
-
                     yield return new WaitForSeconds(perFrame);
                     slashGo.transform.localPosition = trajectories[o];
                 }
 
-
-                slashGo.transform.position = GetTrajectoryPosition(Data.trajectories[0]);
+                slashGo.transform.position = initPos;
 
                 yield return new WaitForSeconds(0.15f);
-                slashGo.SetActive(false);
-                collider.enabled = false;
+                Enable(false);
             }
         }
     }
@@ -101,37 +96,19 @@ public class A_Warrior_DubbleSlash : MonoBehaviour, IClassAttack, IHitdetection
     {
     }
 
-    public Rect GetBounds(List<Vector2> points)
-    {
-        if (points == null || points.Count == 0)
-        {
-            return new Rect();
-        }
-
-        // Initialize min and max points
-        Vector2 min = points[0];
-        Vector2 max = points[0];
-
-        // Iterate through the points to find the min and max x and y
-        foreach (var point in points)
-        {
-            if (point.x < min.x)
-                min.x = point.x;
-            if (point.y < min.y)
-                min.y = point.y;
-            if (point.x > max.x)
-                max.x = point.x;
-            if (point.y > max.y)
-                max.y = point.y;
-        }
-
-        return new Rect(min.x, min.y, max.x - min.x, max.y - min.y);
-    }
-
     public Collider2D CreateCollider()
     {
         var collider = gameObject.AddComponent<PolygonCollider2D>();
         collider.isTrigger = true;
         return collider;
+    }
+
+    public void Enable(bool isOn)
+    {
+        if(slashGo)
+            slashGo.SetActive(isOn);
+
+        if(hitBox)
+            hitBox.enabled = isOn;
     }
 }
