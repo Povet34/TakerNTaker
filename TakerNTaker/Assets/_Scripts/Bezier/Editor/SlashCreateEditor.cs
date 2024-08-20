@@ -21,16 +21,17 @@ public class SlashCreateEditor : Editor
         if (GUILayout.Button("Save Points"))
         {
             var list = creator.GetPoints();
-            var wrapper = new Vector2ToFloat2WrapperList();
+            var data = new TrajectoryData();
             if(null != list)
             {
                 for (int i = 0; i < list.Count; i++) 
                 {
-                    wrapper.positions.Add(new Vector2ToFloat2Wrapper(list[i].x, list[i].y));
+                    data.positions.Add(new TrajectoryPosition(list[i].x, list[i].y));
                 }
+                data.branches = creator.GetBranches();
             }
 
-            var json = JsonUtility.ToJson(wrapper, true);
+            var json = JsonUtility.ToJson(data, true);
             string path = Application.dataPath + $"/_Data/Points/{saveName}.json";
 
             File.WriteAllText(path, json);

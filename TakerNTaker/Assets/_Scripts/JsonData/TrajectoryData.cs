@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
-public class Vector2ToFloat2WrapperList
+public class TrajectoryData
 {
-    public List<Vector2ToFloat2Wrapper> positions = new List<Vector2ToFloat2Wrapper>();
+    public List<TrajectoryPosition> positions = new List<TrajectoryPosition>();
+    public List<int> branches = new List<int>();
 
-    public List<Vector2> GetData()
+    public List<Vector2> GetPositions()
     {
         var list = new List<Vector2>();
         for(int i = 0; i < positions.Count; i++)
@@ -17,15 +18,20 @@ public class Vector2ToFloat2WrapperList
 
         return list;
     }
+
+    public List<int> GetBranches() 
+    {
+        return branches;
+    }
 }
 
 [System.Serializable]
-public class Vector2ToFloat2Wrapper
+public class TrajectoryPosition
 {
     public float x;
     public float y;
 
-    public Vector2ToFloat2Wrapper(float x, float y)
+    public TrajectoryPosition(float x, float y)
     {
         this.x = x;
         this.y = y;

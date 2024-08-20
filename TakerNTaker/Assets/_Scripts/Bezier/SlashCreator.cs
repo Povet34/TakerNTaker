@@ -15,6 +15,7 @@ public class SlashCreator : MonoBehaviour {
     public float tiling = 1;
 
     [SerializeField] Vector2[] points;
+    [SerializeField] int[] branches;
 
     private void OnValidate()
     {
@@ -92,5 +93,10 @@ public class SlashCreator : MonoBehaviour {
     public List<Vector2> GetPoints()
     {
         return points.ToList();
+    }
+
+    public List<int> GetBranches()
+    {
+        return branches.ToList();
     }
 }

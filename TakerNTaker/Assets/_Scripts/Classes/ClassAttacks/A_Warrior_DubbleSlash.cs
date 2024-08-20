@@ -3,6 +3,7 @@ using Goldmetal.UndeadSurvivor;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static CodeMonkey.Utils.UI_TextComplex;
 
 public class A_Warrior_DubbleSlash : MonoBehaviour, IClassAttack, IHitdetection
 {
@@ -76,6 +77,7 @@ public class A_Warrior_DubbleSlash : MonoBehaviour, IClassAttack, IHitdetection
                 
                 for (int o = 0; o < trajectories.Count; o++)
                 {
+                    TestTrigger(o);
                     yield return new WaitForSeconds(perFrame);
                     slashGo.transform.localPosition = trajectories[o];
                 }
@@ -110,5 +112,19 @@ public class A_Warrior_DubbleSlash : MonoBehaviour, IClassAttack, IHitdetection
 
         if(hitBox)
             hitBox.enabled = isOn;
+    }
+
+    void TestTrigger(int count)
+    {
+        if (Data.brenches[0] - 1 == count)
+        {
+            if (hitBox)
+                hitBox.enabled = false;
+        }
+        else if(Data.brenches[0] + 1 == count)
+        {
+            if (hitBox)
+                hitBox.enabled = true;
+        }
     }
 }

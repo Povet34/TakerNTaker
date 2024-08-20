@@ -11,6 +11,7 @@ public class ClassAttackData : ScriptableObject
         Warrior_Slash,      //그냥 베기
         Warrior_DragSlash,  //끌어 베기
         Warrior_DubbleSlash,
+        Warrior_SnakeSlash,
     }
 
     public enum eCollisionType
@@ -25,11 +26,9 @@ public class ClassAttackData : ScriptableObject
     public eAttackType attackType;
     public eCollisionType collisionType;
 
-    public int attackId;
     public string attackName;
     [TextArea]
     public string attackDesc;
-    public Sprite attackIcon;
 
     [Header("# Base Init Data")]
     public float baseDamage;
@@ -41,9 +40,15 @@ public class ClassAttackData : ScriptableObject
     [Header("# Weapon")]
     public GameObject projectile;
     public List<Vector2> trajectories;
+    public List<int> brenches;
 
     public void SetTrajectories(List<Vector2> points)
     {
         trajectories = points;
+    }
+
+    public void SetBranches(List<int> brenches)
+    {
+        this.brenches = brenches;
     }
 }

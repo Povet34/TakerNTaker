@@ -9,12 +9,12 @@ using UnityEditor;
 [CustomEditor(typeof(ClassAttackData))]
 public class ClassAttackDataEditor : Editor
 {
-    ClassAttackData data;
+    ClassAttackData attackData;
     string fileName = "";
 
     void OnEnable()
     {
-        data = (ClassAttackData)target;
+        attackData = (ClassAttackData)target;
     }
 
     public override void OnInspectorGUI()
@@ -31,9 +31,12 @@ public class ClassAttackDataEditor : Editor
 
             if(!string.IsNullOrEmpty(json)) 
             {
-                var points = JsonUtility.FromJson<Vector2ToFloat2WrapperList>(json).GetData();
-
-                data.SetTrajectories(points);
+                var data = JsonUtility.FromJson<TrajectoryData>(json);
+                if (null != data)
+                {
+                    attackData.SetTrajectories(data.GetPositions());
+                    attackData.SetBranches(data.GetBranches());
+                }
             }
         }
     }
