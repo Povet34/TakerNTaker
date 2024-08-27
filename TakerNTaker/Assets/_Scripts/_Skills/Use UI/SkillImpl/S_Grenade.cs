@@ -1,5 +1,4 @@
 using CodeMonkey.Utils;
-using DG.Tweening;
 using Goldmetal.UndeadSurvivor;
 using System.Linq;
 using UnityEngine;
@@ -16,7 +15,6 @@ namespace IngameSkill
         void Awake()
         {
             player = GameManager.instance.player;
-
         }
 
         public void Init(SkillData data)

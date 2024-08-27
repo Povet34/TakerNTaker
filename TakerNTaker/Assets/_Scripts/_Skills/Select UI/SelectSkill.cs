@@ -45,6 +45,7 @@ namespace IngameSkill
                 case SkillData.eSkillType.W_RANGE_ATTACK:
                 case SkillData.eSkillType.W_FOOTS_UNDER_FIELD:
                 case SkillData.eSkillType.W_GRANADE:
+                case SkillData.eSkillType.W_LASER:
                     textDesc.text = string.Format(data.skillDesc, data.damages[level], data.counts[level]);
                     break;
                 default:
@@ -99,6 +100,21 @@ namespace IngameSkill
                         if (null == sk)
                         {
                             sk = new GameObject(nameof(S_Grenade)).AddComponent<S_Grenade>();
+                            sk.Init(data);
+                            player.AddEquipSkill(sk);
+                        }
+                        else
+                        {
+                            sk.LevelUp();
+                        }
+                        break;
+                    }
+                case SkillData.eSkillType.W_LASER:
+                    {
+                        sk = player.FindEquipedSkill(SkillData.eSkillType.W_GRANADE);
+                        if (null == sk)
+                        {
+                            sk = new GameObject(nameof(S_Laser)).AddComponent<S_Laser>();
                             sk.Init(data);
                             player.AddEquipSkill(sk);
                         }

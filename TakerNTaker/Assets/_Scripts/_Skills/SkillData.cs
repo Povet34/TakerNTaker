@@ -31,6 +31,7 @@ namespace IngameSkill
         public int baseCount;
         public float baseRange;
         public float baseDuration;
+        public float baseCharingTime;
 
         [Header("# Level Data")]
         public float[] damages;

@@ -15,17 +15,23 @@ MonoBehaviour:
   classType: 1
   skillType: 6
   skillId: 0
-  skillName: 
-  skillDesc: 
-  skillIcon: {fileID: 0}
-  baseDamage: 0.13
-  baseCount: 0
-  baseRange: 0
-  baseDuration: 0
-  damages: []
-  counts: 
+  skillName: "\uB808\uC774\uC800"
+  skillDesc: "\uAE30\uB97C \uBAA8\uC544\uC11C \uC3E9\uB2C8\uB2E4."
+  skillIcon: {fileID: -537537479, guid: 0d5e657ee5a074e4baa53d5b248a01d2, type: 3}
+  baseDamage: 10
+  baseCount: 1
+  baseRange: 10
+  baseDuration: 10
+  baseCharingTime: 0
+  damages:
+  - 5
+  counts: 05000000
   ranges: []
-  coolTime: []
+  coolTime:
+  - 5
   duration: []
   requiredMana: []
-  projectiles: []
+  projectiles:
+  - {fileID: 1586966729713003366, guid: a59642ba6f4dd4a4c8f716a0c9268733, type: 3}
+  - {fileID: 0}
+  - {fileID: 2934763024347576408, guid: 65adf0656e7207d42a98de2f638eaf11, type: 3}
