@@ -58,7 +58,6 @@ namespace IngameSkill
         Vector2 throwDir;
         GameObject uiArrowGo;
         GameObject chargingEffectGo;
-        bool isBegin;
 
         void OnBegin(PointerEventData eventData)
         {

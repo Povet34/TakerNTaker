@@ -19,6 +19,9 @@ public class Player : MonoBehaviour
     SpriteRenderer spriter;
     Animator anim;
 
+    public bool IsMovable { get => isMovable; set => isMovable = value; }
+    bool isMovable = true;
+
     private List<ISkill> equipedSkills = new List<ISkill>();
     public Vector3 CurrentPlayerLookVector { get; private set; }
     public Vector2 GetPosXY() => new Vector2(transform.position.x, transform.position.y);
@@ -56,8 +59,12 @@ public class Player : MonoBehaviour
 
         inputVec = playerInput.actions["Move"].ReadValue<Vector2>();
 
-        Vector2 nextVec = inputVec.normalized * speed * Time.fixedDeltaTime;
-        rigid.MovePosition(rigid.position + nextVec);
+
+        if (isMovable)
+        {
+            Vector2 nextVec = inputVec.normalized * speed * Time.fixedDeltaTime;
+            rigid.MovePosition(rigid.position + nextVec);
+        }
 
         if (Vector2.zero != inputVec)
         {

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ddeb2ef9ed7d7d4488a590af0b725605, type: 3}
   m_Name: Under Fields
   m_EditorClassIdentifier: 
-  classType: 0
+  classType: 1
   skillType: 3
   skillId: 1
   skillName: "[\uC804\uC0AC] \uBD88\uC7A5\uD310"
@@ -23,6 +23,7 @@ MonoBehaviour:
   baseCount: 10
   baseRange: 3
   baseDuration: 5
+  baseCharingTime: 0
   damages:
   - 10
   - 100

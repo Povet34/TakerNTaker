@@ -9,12 +9,11 @@ namespace IngameSkill
         public enum eSkillType 
         {
             None,
-            TEST,
-            W_RUSH,                 //전사 돌진
-            W_FOOTS_UNDER_FIELD,    //전사 발밑 장판
-            W_RANGE_ATTACK,         //전사 원거리 공격
-            W_GRANADE,              //전사 그레네이드
-            W_LASER,                //전사가...레이저?
+            S_TestSkill,
+            S_Rush,                 //전사 돌진
+            S_FootsUnderField,      //전사 발밑 장판
+            S_Grenade,              //전사 그레네이드
+            S_Laser,                //전사가...레이저?
         }
 
         [Header("# Main Info")]

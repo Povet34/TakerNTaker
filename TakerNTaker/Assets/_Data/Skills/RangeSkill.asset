@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: RangeSkill
   m_EditorClassIdentifier: 
   classType: 0
-  skillType: 4
+  skillType: 0
   skillId: 2
   skillName: "[\uC804\uC0AC] \uC6D0\uAC70\uB9AC "
   skillDesc: "\uC804\uC0AC\uC758 \uC6D0\uAC70\uB9AC \uACF5\uACA9\uC785\uB2C8\uB2E4."
@@ -22,6 +22,7 @@ MonoBehaviour:
   baseCount: 0
   baseRange: 10
   baseDuration: 0
+  baseCharingTime: 0
   damages: []
   counts: 
   ranges: []

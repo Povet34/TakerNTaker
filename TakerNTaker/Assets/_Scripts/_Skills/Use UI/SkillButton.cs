@@ -20,6 +20,9 @@ namespace IngameSkill
 
         SkillData data;
 
+        bool isBegin;
+        PointerEventData moveEventData;
+
         public bool IsEmpty()
         {
             return data == null;
@@ -42,19 +45,35 @@ namespace IngameSkill
         public void OnPointerDown(PointerEventData eventData)
         {
             if (OnDownHandler != null)
+            {
+                isBegin = true;
                 OnDownHandler.Invoke(eventData);
+            }
         }
 
         public void OnPointerUp(PointerEventData eventData)
         {
             if (OnUpHandler != null)
+            {
+                isBegin = false;
                 OnUpHandler.Invoke(eventData);
+
+                moveEventData = null;
+            }
+        }
+
+        private void Update()
+        {
+            if (isBegin)
+            {
+                if (OnMoveHandler != null)
+                    OnMoveHandler.Invoke(moveEventData);
+            }
         }
 
         public void OnPointerMove(PointerEventData eventData)
         {
-            if (OnMoveHandler != null)
-                OnMoveHandler.Invoke(eventData);
+            moveEventData = eventData;
         }
     }
 }

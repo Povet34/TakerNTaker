@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ddeb2ef9ed7d7d4488a590af0b725605, type: 3}
   m_Name: TestSkill
   m_EditorClassIdentifier: 
-  classType: 0
+  classType: 1
   skillType: 1
   skillId: 0
   skillName: Test
@@ -21,6 +21,8 @@ MonoBehaviour:
   baseDamage: 10
   baseCount: 10
   baseRange: 0
+  baseDuration: 0
+  baseCharingTime: 0
   damages:
   - 10
   - 100
@@ -29,4 +31,4 @@ MonoBehaviour:
   coolTime: []
   duration: []
   requiredMana: []
-  projectile: {fileID: 0}
+  projectiles: []

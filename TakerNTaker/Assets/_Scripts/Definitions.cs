@@ -7,4 +7,6 @@ public static class Definitions
         ARCHER,
         MAGE,
     }
+
+    public static string NAMESPACE_INGAMESKILL = "IngameSkill";
 }
