@@ -1,6 +1,7 @@
 using CodeMonkey.Utils;
 using Goldmetal.UndeadSurvivor;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -88,8 +89,11 @@ namespace IngameSkill
             {
                 if (IsCharingDone())
                 {
-                    chargingEffectGo.GetComponent<LineRenderer>().SetPosition(0, player.GetPosXY());
-                    chargingEffectGo.GetComponent<LineRenderer>().SetPosition(1, player.GetPosXY() - (throwDir - eventData.position).normalized * 10);
+                    var line = chargingEffectGo.GetComponentInChildren<LineRenderer>();
+                    var dir = -(throwDir - eventData.position).normalized;
+
+                    line.SetPosition(0, player.GetPosXY() + dir);
+                    line.SetPosition(1, player.GetPosXY() + dir * 10);
 
                     Invoke(nameof(DestroyLaser), 1f);
                 }
@@ -102,10 +106,15 @@ namespace IngameSkill
 
         void OnMove(PointerEventData eventData)
         {
-            var dir = throwDir - eventData.position;
+            var dir = -(throwDir - eventData.position).normalized;
             if (uiArrowGo)
             {
                 uiArrowGo.transform.rotation = Quaternion.Euler(new Vector3(0, 0, UtilsClass.GetAngleFromVector(dir) - 180));
+            }
+
+            if(chargingEffectGo)
+            {
+                chargingEffectGo.transform.position = player.GetPosXY() + dir;
             }
 
             Charge();

@@ -3,7 +3,6 @@ using Goldmetal.UndeadSurvivor;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static CodeMonkey.Utils.UI_TextComplex;
 
 public class A_Warrior_DubbleSlash : MonoBehaviour, IClassAttack, IHitdetection
 {
@@ -14,6 +13,8 @@ public class A_Warrior_DubbleSlash : MonoBehaviour, IClassAttack, IHitdetection
     float timer;
     GameObject slashGo;
     List<Vector3> attackPathPositions = new List<Vector3>();
+
+    Coroutine doSlashRoutine;
 
     void Awake()
     {
@@ -41,7 +42,12 @@ public class A_Warrior_DubbleSlash : MonoBehaviour, IClassAttack, IHitdetection
             if (timer > Data.baseCoolTime)
             {
                 timer = 0;
-                StartCoroutine(DoSlash());
+                if (null != doSlashRoutine)
+                {
+                    StopCoroutine(doSlashRoutine);
+                    doSlashRoutine = null;
+                }
+                doSlashRoutine = StartCoroutine(DoSlash());
             }
         }
     }

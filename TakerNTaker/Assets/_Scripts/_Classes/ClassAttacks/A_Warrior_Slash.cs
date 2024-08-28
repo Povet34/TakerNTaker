@@ -14,6 +14,8 @@ public class A_Warrior_Slash : MonoBehaviour, IClassAttack, IHitdetection
     GameObject slashGo;
     List<Vector3> attackPathPositions = new List<Vector3>();
 
+    Coroutine doSlashRoutine;
+
     void Awake()
     {
         player = GameManager.instance.player;
@@ -34,13 +36,18 @@ public class A_Warrior_Slash : MonoBehaviour, IClassAttack, IHitdetection
 
     private void Update()
     {
-        if(null != Data)
+        if (null != Data)
         {
             timer += Time.deltaTime;
             if (timer > Data.baseCoolTime)
             {
                 timer = 0;
-                StartCoroutine(DoSlash());
+                if (null != doSlashRoutine)
+                {
+                    StopCoroutine(doSlashRoutine);
+                    doSlashRoutine = null;
+                }
+                doSlashRoutine = StartCoroutine(DoSlash());
             }
         }
     }

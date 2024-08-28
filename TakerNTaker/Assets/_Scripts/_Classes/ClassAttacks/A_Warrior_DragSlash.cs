@@ -13,7 +13,9 @@ public class A_Warrior_DragSlash : MonoBehaviour, IClassAttack, IHitdetection
     float timer;
     GameObject slashGo;
     List<Vector3> attackPathPositions = new List<Vector3>();
-    
+
+    Coroutine doSlashRoutine;
+
     void Awake()
     {
         player = GameManager.instance.player;
@@ -40,7 +42,12 @@ public class A_Warrior_DragSlash : MonoBehaviour, IClassAttack, IHitdetection
             if (timer > Data.baseCoolTime)
             {
                 timer = 0;
-                StartCoroutine(DoSlash());
+                if (null != doSlashRoutine)
+                {
+                    StopCoroutine(doSlashRoutine);
+                    doSlashRoutine = null;
+                }
+                doSlashRoutine = StartCoroutine(DoSlash());
             }
         }
     }
