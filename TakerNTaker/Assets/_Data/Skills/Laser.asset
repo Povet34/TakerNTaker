@@ -22,7 +22,7 @@ MonoBehaviour:
   baseCount: 1
   baseRange: 10
   baseDuration: 10
-  baseCharingTime: 0
+  baseCharingTime: 1
   damages:
   - 5
   counts: 05000000

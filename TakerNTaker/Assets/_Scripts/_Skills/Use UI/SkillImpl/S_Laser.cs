@@ -40,10 +40,8 @@ namespace IngameSkill
 
         public void Charge()
         {
-            if (Data.baseCharingTime > charingTimer)
-            {
-                charingTimer += Time.deltaTime;
-            }
+            Debug.Log($"charingTimer : {charingTimer}");
+            charingTimer += Time.deltaTime;
         }
 
         public bool IsCharingDone()
@@ -64,6 +62,9 @@ namespace IngameSkill
 
         void OnBegin(PointerEventData eventData)
         {
+            if (chargingEffectGo)
+                return;
+
             charingTimer = 0;
             throwDir = eventData.position;
 
@@ -84,9 +85,20 @@ namespace IngameSkill
 
         void OnEnd(PointerEventData eventData)
         {
-            chargingEffectGo.GetComponent<LineRenderer>().SetPosition(1, Vector2.one);
+            if (chargingEffectGo)
+            {
+                if (IsCharingDone())
+                {
+                    chargingEffectGo.GetComponent<LineRenderer>().SetPosition(0, player.GetPosXY());
+                    chargingEffectGo.GetComponent<LineRenderer>().SetPosition(1, player.GetPosXY() - (throwDir - eventData.position).normalized * 10);
 
-            Invoke(nameof(destory), 1f);
+                    Invoke(nameof(DestroyLaser), 1f);
+                }
+                else
+                {
+                    DestroyLaser();
+                }
+            }
         }
 
         void OnMove(PointerEventData eventData)
@@ -97,12 +109,15 @@ namespace IngameSkill
                 uiArrowGo.transform.rotation = Quaternion.Euler(new Vector3(0, 0, UtilsClass.GetAngleFromVector(dir) - 180));
             }
 
+            Charge();
+
             //Â÷Â¡ °ÔÀÌÁö
         }
 
-        void destory()
+        void DestroyLaser()
         {
             Destroy(chargingEffectGo);
+            uiArrowGo.SetActive(false);
         }
 
         #endregion
