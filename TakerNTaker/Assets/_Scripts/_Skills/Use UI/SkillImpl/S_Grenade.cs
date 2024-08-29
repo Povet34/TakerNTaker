@@ -9,12 +9,12 @@ namespace IngameSkill
     public class S_Grenade : MonoBehaviour, ISkill
     {
         public int level { get ; set ; }
-        public Player player { get; set; }
+        public Player owner { get; set; }
         public SkillUIController Controller { get; set; }
         public SkillData Data { get; set; }
         void Awake()
         {
-            player = GameManager.instance.player;
+            owner = GameManager.instance.player;
         }
 
         public void Init(SkillData data)
@@ -23,7 +23,7 @@ namespace IngameSkill
 
             // Basic Set
             name = $"{GetType().Name}{++level}";
-            transform.parent = player.transform;
+            transform.parent = owner.transform;
             transform.localPosition = Vector3.zero;
 
             Controller = FindObjectOfType<SkillUIController>();

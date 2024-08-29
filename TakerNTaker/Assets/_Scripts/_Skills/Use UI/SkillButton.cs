@@ -66,8 +66,10 @@ namespace IngameSkill
         {
             if (isBegin)
             {
-                if (OnMoveHandler != null)
+                if (null != OnMoveHandler && null != moveEventData)
+                {
                     OnMoveHandler.Invoke(moveEventData);
+                }
             }
         }
 

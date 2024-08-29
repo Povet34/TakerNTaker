@@ -10,7 +10,7 @@ namespace IngameSkill
     public class S_Laser : MonoBehaviour, ISkill, IGauge
     {
         public int level { get; set; }
-        public Player player { get; set; }
+        public Player owner { get; set; }
         public SkillUIController Controller { get; set; }
         public SkillData Data { get; set; }
         public float ChangingTime { get; set; }
@@ -23,7 +23,7 @@ namespace IngameSkill
 
         void Awake()
         {
-            player = GameManager.instance.player;
+            owner = GameManager.instance.player;
         }
 
         public void Init(SkillData data)
@@ -32,7 +32,7 @@ namespace IngameSkill
 
             // Basic Set
             name = $"{GetType().Name}{++level}";
-            transform.parent = player.transform;
+            transform.parent = owner.transform;
             transform.localPosition = Vector3.zero;
 
             Controller = FindObjectOfType<SkillUIController>();
@@ -58,6 +58,7 @@ namespace IngameSkill
 
         Vector2 throwDir;
         GameObject chargingEffectGo;
+        LaserMuzzelEffect muzzelEffect;
 
         bool wasFire;
 
@@ -71,6 +72,7 @@ namespace IngameSkill
             charingTimer = 0;
             throwDir = eventData.position;
 
+
             CommonSpawner.Instance.SetUI3DArrowPosition(transform.position);
             CommonSpawner.Instance.ShowUI3DArrow(true);
 
@@ -79,9 +81,11 @@ namespace IngameSkill
             if (chObj)
             {
                 chargingEffectGo = Instantiate(chObj, transform.position, Quaternion.identity);
+                muzzelEffect = chargingEffectGo.GetComponentInChildren<LaserMuzzelEffect>();
+                muzzelEffect.Show(false);
             }
 
-            player.IsMovable = false;
+            owner.IsMovable = false;
         }
 
         void OnEnd(PointerEventData eventData)
@@ -93,32 +97,57 @@ namespace IngameSkill
                     var line = chargingEffectGo.GetComponentInChildren<LineRenderer>();
                     var dir = -(throwDir - eventData.position).normalized;
 
-                    line.SetPosition(0, player.GetPosXY() + dir);
+                    line.SetPosition(0, owner.GetPosXY() + dir);
+                    muzzelEffect.Show(true);
 
-                    RaycastHit2D wallHit = Physics2D.Raycast(player.GetPosXY(), dir, 100, LayerMask.GetMask("Object"));
+                    RaycastHit2D wallHit = Physics2D.Raycast(owner.GetPosXY(), dir, 100, LayerMask.GetMask("Object"));
                     if (null != wallHit.collider)
                     {
+                        var hitEffectPrefab = Data.projectiles[1];
+
                         line.SetPosition(1, wallHit.point);
 
-                        float distance = Vector2.Distance(player.GetPosXY(), wallHit.point);
-                        RaycastHit2D[] damagableHit = Physics2D.RaycastAll(player.GetPosXY(), dir, distance);
-                        foreach(var hit in damagableHit)
+                        var endHitDir = owner.GetPosXY() - wallHit.point;
+                        var endEffect = Instantiate(hitEffectPrefab, wallHit.point, Quaternion.Euler(endHitDir));
+
+                        LaserHitEffect.Data eeData = new LaserHitEffect.Data();
+                        eeData.duration = Data.baseDuration;
+                        eeData.scale = 1f;
+                        endEffect.GetComponent<LaserHitEffect>()?.Init(eeData);
+
+                        float distance = Vector2.Distance(owner.GetPosXY(), wallHit.point);
+
+                        LayerMask hitableLayer = LayerMask.GetMask("Player") | LayerMask.GetMask("BehindMask");
+
+                        RaycastHit2D[] damagableHit = Physics2D.RaycastAll(owner.GetPosXY(), dir, distance, hitableLayer);
+
+
+                        foreach (var hit in damagableHit)
                         {
-                            //Instantiate(new GameObject("여기 파티클!"), hit.point, );
+                            if (hit.collider.gameObject == owner.gameObject)
+                                continue;
+
+                            var hitDir = owner.GetPosXY() - hit.point;
+                            var effect = Instantiate(hitEffectPrefab, hit.point, Quaternion.Euler(hitDir));
+
+                            LaserHitEffect.Data eData = new LaserHitEffect.Data();
+                            eData.duration = Data.baseDuration;
+                            eData.scale = 0.5f;
+                            effect.GetComponent<LaserHitEffect>()?.Init(eData);
                         }
                     }
                     else
                     {
-                        line.SetPosition(1, player.GetPosXY() + dir * 100);
+                        line.SetPosition(1, owner.GetPosXY() + dir * 100);
                     }
 
                     wasFire = true;
-                    Invoke(nameof(DestroyLaser), 1f);
+                    Invoke(nameof(DestroyLaser), Data.baseDuration);
                 }
                 else
                 {
                     DestroyLaser();
-                    player.IsMovable = true;
+                    owner.IsMovable = true;
                 }
             }
 
@@ -132,7 +161,7 @@ namespace IngameSkill
 
             if(chargingEffectGo)
             {
-                chargingEffectGo.transform.position = player.GetPosXY() + dir;
+                chargingEffectGo.transform.position = owner.GetPosXY() + dir;
             }
 
             Charge();
@@ -143,7 +172,7 @@ namespace IngameSkill
         void DestroyLaser()
         {
             wasFire = false;
-            player.IsMovable = true;
+            owner.IsMovable = true;
 
             Destroy(chargingEffectGo);
         }

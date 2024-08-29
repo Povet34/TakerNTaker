@@ -2,9 +2,16 @@ using UnityEngine;
 
 public class LaserHitEffect : MonoBehaviour
 {
-    public void Init(float duration)
+    public struct Data
     {
-        Invoke(nameof(Destroy), duration);
+        public float duration;
+        public float scale;
+    }
+
+    public void Init(Data data)
+    {
+        transform.localScale = data.scale * Vector3.one;
+        Invoke(nameof(Destroy), data.duration);
     }
 
     private void Destroy()

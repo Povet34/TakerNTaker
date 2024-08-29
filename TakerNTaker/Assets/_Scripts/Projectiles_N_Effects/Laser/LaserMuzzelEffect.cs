@@ -4,15 +4,8 @@ using UnityEngine;
 
 public class LaserMuzzelEffect : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    public void Show(bool isOn)
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        gameObject.gameObject.SetActive(isOn);
     }
 }

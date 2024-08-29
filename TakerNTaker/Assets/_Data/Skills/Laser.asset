@@ -21,7 +21,7 @@ MonoBehaviour:
   baseDamage: 10
   baseCount: 1
   baseRange: 10
-  baseDuration: 10
+  baseDuration: 1
   baseCharingTime: 1
   damages:
   - 5
@@ -33,3 +33,4 @@ MonoBehaviour:
   requiredMana: []
   projectiles:
   - {fileID: 1586966729713003366, guid: a59642ba6f4dd4a4c8f716a0c9268733, type: 3}
+  - {fileID: 513383523863465808, guid: 8733abed635971c4487476e9d9decc4b, type: 3}
