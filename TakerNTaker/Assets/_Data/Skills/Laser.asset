@@ -33,5 +33,3 @@ MonoBehaviour:
   requiredMana: []
   projectiles:
   - {fileID: 1586966729713003366, guid: a59642ba6f4dd4a4c8f716a0c9268733, type: 3}
-  - {fileID: 0}
-  - {fileID: 2934763024347576408, guid: 65adf0656e7207d42a98de2f638eaf11, type: 3}

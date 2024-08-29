@@ -38,25 +38,19 @@ namespace IngameSkill
         #region Projectile 
 
         Vector2 throwDir;
-        GameObject uiArrow;
 
         void OnBegin(PointerEventData eventData)
         {
             //캐릭터부터의 화살표 표시하기 실시간으로 갱신하기
             throwDir = eventData.position;
 
-            if(!uiArrow)
-            {
-                uiArrow = Instantiate(Data.projectiles[2], transform.position, Quaternion.identity);
-            }
-            uiArrow.transform.position = transform.position;
-            uiArrow.SetActive(true);
+            CommonSpawner.Instance.SetUI3DArrowPosition(transform.position);
+            CommonSpawner.Instance.ShowUI3DArrow(true);
         }
 
         void OnEnd(PointerEventData eventData)
         {
             var dir = throwDir - eventData.position;
-            Debug.Log($"throwDir : {dir}");
 
             var granadeObj = Data.projectiles.First();
             if (granadeObj)
@@ -65,16 +59,13 @@ namespace IngameSkill
                 go.GetComponent<GranadeObject>()?.Init(Data, -dir.normalized);
             }
 
-            uiArrow.SetActive(false);
+            CommonSpawner.Instance.ShowUI3DArrow(false);
         }
 
         void OnMove(PointerEventData eventData)
         {
-            if (uiArrow)
-            {
-                var dir = throwDir - eventData.position;
-                uiArrow.transform.rotation = Quaternion.Euler(new Vector3(0,0, UtilsClass.GetAngleFromVector(dir) - 180));
-            }
+            var dir = -(throwDir - eventData.position);
+            CommonSpawner.Instance.SetDirectionAndPosition_FormPlayer(dir);
         }
 
         #endregion

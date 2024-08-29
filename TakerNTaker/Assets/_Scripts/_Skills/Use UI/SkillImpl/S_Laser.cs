@@ -57,23 +57,22 @@ namespace IngameSkill
         #region Projectile
 
         Vector2 throwDir;
-        GameObject uiArrowGo;
         GameObject chargingEffectGo;
+
+        bool wasFire;
 
         void OnBegin(PointerEventData eventData)
         {
             if (chargingEffectGo)
                 return;
 
+            wasFire = false;
+
             charingTimer = 0;
             throwDir = eventData.position;
 
-            if (!uiArrowGo)
-            {
-                uiArrowGo = Instantiate(Data.projectiles[2], transform.position, Quaternion.identity);
-            }
-            uiArrowGo.transform.position = transform.position;
-            uiArrowGo.SetActive(true);
+            CommonSpawner.Instance.SetUI3DArrowPosition(transform.position);
+            CommonSpawner.Instance.ShowUI3DArrow(true);
 
             //Â÷Â¡ ÀÌÆåÆ®
             var chObj = Data.projectiles.First();
@@ -81,6 +80,8 @@ namespace IngameSkill
             {
                 chargingEffectGo = Instantiate(chObj, transform.position, Quaternion.identity);
             }
+
+            player.IsMovable = false;
         }
 
         void OnEnd(PointerEventData eventData)
@@ -93,24 +94,41 @@ namespace IngameSkill
                     var dir = -(throwDir - eventData.position).normalized;
 
                     line.SetPosition(0, player.GetPosXY() + dir);
-                    line.SetPosition(1, player.GetPosXY() + dir * 10);
 
+                    RaycastHit2D wallHit = Physics2D.Raycast(player.GetPosXY(), dir, 100, LayerMask.GetMask("Object"));
+                    if (null != wallHit.collider)
+                    {
+                        line.SetPosition(1, wallHit.point);
+
+                        float distance = Vector2.Distance(player.GetPosXY(), wallHit.point);
+                        RaycastHit2D[] damagableHit = Physics2D.RaycastAll(player.GetPosXY(), dir, distance);
+                        foreach(var hit in damagableHit)
+                        {
+                            //Instantiate(new GameObject("¿©±â ÆÄÆ¼Å¬!"), hit.point, );
+                        }
+                    }
+                    else
+                    {
+                        line.SetPosition(1, player.GetPosXY() + dir * 100);
+                    }
+
+                    wasFire = true;
                     Invoke(nameof(DestroyLaser), 1f);
                 }
                 else
                 {
                     DestroyLaser();
+                    player.IsMovable = true;
                 }
             }
+
+            CommonSpawner.Instance.ShowUI3DArrow(false);
         }
 
         void OnMove(PointerEventData eventData)
         {
             var dir = -(throwDir - eventData.position).normalized;
-            if (uiArrowGo)
-            {
-                uiArrowGo.transform.rotation = Quaternion.Euler(new Vector3(0, 0, UtilsClass.GetAngleFromVector(dir) - 180));
-            }
+            CommonSpawner.Instance.SetDirectionAndPosition_FormPlayer(dir);
 
             if(chargingEffectGo)
             {
@@ -124,8 +142,10 @@ namespace IngameSkill
 
         void DestroyLaser()
         {
+            wasFire = false;
+            player.IsMovable = true;
+
             Destroy(chargingEffectGo);
-            uiArrowGo.SetActive(false);
         }
 
         #endregion

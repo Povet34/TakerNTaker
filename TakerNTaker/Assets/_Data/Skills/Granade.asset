@@ -37,4 +37,3 @@ MonoBehaviour:
   projectiles:
   - {fileID: 1955712268476486474, guid: 45bd542f76111264cbdc7eaa7a06a267, type: 3}
   - {fileID: 1955712268476486474, guid: 9e81f0f62d992f94a9405a5d7439ec04, type: 3}
-  - {fileID: 2934763024347576408, guid: 65adf0656e7207d42a98de2f638eaf11, type: 3}
