@@ -1,5 +1,6 @@
 using CodeMonkey.Utils;
 using Goldmetal.UndeadSurvivor;
+using System.Collections;
 using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -116,36 +117,7 @@ namespace IngameSkill
                         endEffect.GetComponent<LaserHitEffect>()?.Init(eeData);
 
                         float distance = Vector2.Distance(owner.GetPosXY(), wallHit.point);
-  
-                        RaycastHit2D[] damagableHit = Physics2D.RaycastAll(owner.GetPosXY(), dir, distance, Definitions.DAMAGABLE_LAYER);
-
-                        foreach (var hit in damagableHit)
-                        {
-                            if (hit.collider.gameObject == owner.gameObject)
-                                continue;
-
-                            var hitDir = owner.GetPosXY() - hit.point;
-                            var effect = Instantiate(hitEffectPrefab, hit.point, Quaternion.Euler(hitDir));
-
-                            LaserHitEffect.Data eData = new LaserHitEffect.Data();
-                            eData.duration = Data.baseDuration;
-                            eData.scale = 0.5f;
-                            effect.GetComponent<LaserHitEffect>()?.Init(eData);
-
-                            var damagable = hit.collider.GetComponent<IDamagable>();
-                            if (null != damagable)
-                            {
-                                Vector3 playerPos = owner.transform.position;
-                                Vector3 dirVec = transform.position - playerPos;
-
-                                DamageMsg msg = new DamageMsg();
-                                msg.owner = owner.gameObject;
-                                msg.amount = Data.baseDamage;
-                                msg.direction = dirVec;
-
-                                damagable.TakeDamage(msg);
-                            }
-                        }
+                        StartCoroutine(ApplyDamage(dir, distance));
                     }
                     else
                     {
@@ -187,6 +159,62 @@ namespace IngameSkill
 
             Destroy(chargingEffectGo);
         }
+
+        IEnumerator ApplyDamage(Vector2 dir, float distance)
+        {
+            float interval = Data.baseDuration / Data.baseAttackCount;
+
+            //for(int i = 0; i < Data.baseAttackCount; i++)
+            //{
+            //    yield return new WaitForSeconds(interval);
+            //    yield return new WaitForFixedUpdate();
+            //}
+
+            var hitEffectPrefab = Data.projectiles[1];
+            float elapsedTime = 0f;
+
+            for (int i = 0; i < Data.baseAttackCount; i++)
+            {
+                RaycastHit2D[] damagableHit = Physics2D.RaycastAll(owner.GetPosXY(), dir, distance, Definitions.DAMAGABLE_LAYER);
+
+                foreach (var hit in damagableHit)
+                {
+                    if (hit.collider.gameObject == owner.gameObject)
+                        continue;
+
+                    var hitDir = owner.GetPosXY() - hit.point;
+                    var effect = Instantiate(hitEffectPrefab, hit.point, Quaternion.Euler(hitDir));
+
+                    LaserHitEffect.Data eData = new LaserHitEffect.Data();
+                    eData.duration = interval;
+                    eData.scale = 0.5f;
+                    effect.GetComponent<LaserHitEffect>()?.Init(eData);
+
+                    var damagable = hit.collider.GetComponent<IDamagable>();
+                    if (null != damagable)
+                    {
+                        Vector3 playerPos = owner.transform.position;
+                        Vector3 dirVec = transform.position - playerPos;
+
+                        DamageMsg msg = new DamageMsg();
+                        msg.owner = owner.gameObject;
+                        msg.amount = Data.baseDamage;
+                        msg.direction = dirVec;
+
+                        damagable.TakeDamage(msg);
+                    }
+                }
+
+                while (elapsedTime < interval)
+                {
+                    elapsedTime += Time.fixedDeltaTime;
+                    yield return new WaitForFixedUpdate();
+                }
+
+                elapsedTime = 0f; // Reset elapsed time after each attack
+            }
+        }
+
 
         #endregion
     }

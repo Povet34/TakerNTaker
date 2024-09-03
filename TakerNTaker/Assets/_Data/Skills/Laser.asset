@@ -19,7 +19,7 @@ MonoBehaviour:
   skillDesc: "\uAE30\uB97C \uBAA8\uC544\uC11C \uC3E9\uB2C8\uB2E4."
   skillIcon: {fileID: -537537479, guid: 0d5e657ee5a074e4baa53d5b248a01d2, type: 3}
   baseDamage: 10
-  baseCount: 1
+  baseAttackCount: 5
   baseRange: 10
   baseDuration: 1
   baseCharingTime: 1

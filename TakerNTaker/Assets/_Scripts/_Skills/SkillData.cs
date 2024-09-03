@@ -27,7 +27,7 @@ namespace IngameSkill
 
         [Header("# Base Init Data")]
         public float baseDamage;
-        public int baseCount;
+        public int baseAttackCount;
         public float baseRange;
         public float baseDuration;
         public float baseCharingTime;
