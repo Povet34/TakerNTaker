@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Goldmetal.UndeadSurvivor
 {
-    public class Enemy : MonoBehaviour
+    public class Enemy : MonoBehaviour, IDamagable
     {
         public float speed;
         public float health;
@@ -77,7 +77,11 @@ namespace Goldmetal.UndeadSurvivor
 
             health -= collision.GetComponent<ISkill>()?.Data.baseDamage ?? 0;
             health -= collision.GetComponent<IClassAttack>()?.Data.baseDamage ?? 0;
-            StartCoroutine(KnockBack());
+
+            Vector3 playerPos = GameManager.instance.player.transform.position;
+            Vector3 dirVec = transform.position - playerPos;
+
+            StartCoroutine(KnockBack(dirVec.normalized * 30));
 
             if (health > 0) {
                 //anim.SetTrigger("Hit");
@@ -97,13 +101,12 @@ namespace Goldmetal.UndeadSurvivor
             }
         }
 
-        IEnumerator KnockBack()
+        IEnumerator KnockBack(Vector2 dir)
         {
             spriter.color = Color.white;
             yield return wait; // 다음 하나의 물리 프레임 딜레이
-            Vector3 playerPos = GameManager.instance.player.transform.position;
-            Vector3 dirVec = transform.position - playerPos;
-            rigid.AddForce(dirVec.normalized * 30, ForceMode2D.Impulse);
+
+            rigid.AddForce(dir, ForceMode2D.Impulse);
 
             yield return new WaitForSeconds(0.1f);
             spriter.color = Color.red;
@@ -112,6 +115,18 @@ namespace Goldmetal.UndeadSurvivor
         void Dead()
         {
             gameObject.SetActive(false);
+        }
+
+        public void TakeDamage(DamageMsg msg)
+        {
+            if (null == msg.owner)
+                return;
+
+            if (msg.owner == gameObject)
+                return;
+
+            health -= msg.amount;
+            StartCoroutine(KnockBack(msg.direction));
         }
     }
 }

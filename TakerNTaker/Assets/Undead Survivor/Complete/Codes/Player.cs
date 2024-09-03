@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using Goldmetal.UndeadSurvivor;
 
-public class Player : MonoBehaviour
+public class Player : MonoBehaviour, IDamagable
 {
     public Vector2 inputVec;
     public float speed;
@@ -223,5 +223,10 @@ public class Player : MonoBehaviour
 
         if(null != removeTarget)
             equipedSkills.Remove(removeTarget);
+    }
+
+    public void TakeDamage(DamageMsg msg)
+    {
+        throw new System.NotImplementedException();
     }
 }

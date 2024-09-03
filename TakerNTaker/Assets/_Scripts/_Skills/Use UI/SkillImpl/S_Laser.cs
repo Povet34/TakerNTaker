@@ -131,6 +131,20 @@ namespace IngameSkill
                             eData.duration = Data.baseDuration;
                             eData.scale = 0.5f;
                             effect.GetComponent<LaserHitEffect>()?.Init(eData);
+
+                            var damagable = hit.collider.GetComponent<IDamagable>();
+                            if (null != damagable)
+                            {
+                                Vector3 playerPos = owner.transform.position;
+                                Vector3 dirVec = transform.position - playerPos;
+
+                                DamageMsg msg = new DamageMsg();
+                                msg.owner = owner.gameObject;
+                                msg.amount = Data.baseDamage;
+                                msg.direction = dirVec;
+
+                                damagable.TakeDamage(msg);
+                            }
                         }
                     }
                     else

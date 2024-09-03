@@ -42,7 +42,6 @@ public class CommonSpawner : Singleton<CommonSpawner>
 
     #endregion
 
-
     #region Charing Gauge
 
     #endregion
