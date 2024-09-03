@@ -100,7 +100,7 @@ namespace IngameSkill
                     line.SetPosition(0, owner.GetPosXY() + dir);
                     muzzelEffect.Show(true);
 
-                    RaycastHit2D wallHit = Physics2D.Raycast(owner.GetPosXY(), dir, 100, LayerMask.GetMask("Object"));
+                    RaycastHit2D wallHit = Physics2D.Raycast(owner.GetPosXY(), dir, 100, Definitions.OBJECT_LAYER); 
                     if (null != wallHit.collider)
                     {
                         var hitEffectPrefab = Data.projectiles[1];
@@ -116,11 +116,8 @@ namespace IngameSkill
                         endEffect.GetComponent<LaserHitEffect>()?.Init(eeData);
 
                         float distance = Vector2.Distance(owner.GetPosXY(), wallHit.point);
-
-                        LayerMask hitableLayer = LayerMask.GetMask("Player") | LayerMask.GetMask("BehindMask");
-
-                        RaycastHit2D[] damagableHit = Physics2D.RaycastAll(owner.GetPosXY(), dir, distance, hitableLayer);
-
+  
+                        RaycastHit2D[] damagableHit = Physics2D.RaycastAll(owner.GetPosXY(), dir, distance, Definitions.DAMAGABLE_LAYER);
 
                         foreach (var hit in damagableHit)
                         {
